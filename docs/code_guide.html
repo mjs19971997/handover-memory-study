@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>راهنمای کد پژوهش «حافظه‌ی هندآور»</title>
+<style>
+:root{--bg:#ffffff;--fg:#1d2733;--muted:#5b6b7a;--line:#d7dee8;--accent:#0b3d59;--codebg:#f4f7fb;--th:#eef3f9}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.85}
+main{max-width:920px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.75rem;color:var(--accent);margin:0.4em 0 0.6em;line-height:1.4}
+h2{font-size:1.35rem;color:var(--accent);margin:2.2em 0 0.6em;padding-bottom:0.25em;border-bottom:1px solid var(--line);line-height:1.5}
+h3{font-size:1.1rem;margin:1.6em 0 0.5em;line-height:1.5}
+p,li{overflow-wrap:anywhere}
+a{color:#1b6ca8;text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:Consolas,"Cascadia Mono","Courier New",monospace;font-size:0.88em;background:var(--codebg);border:1px solid var(--line);border-radius:4px;padding:0 0.3em;direction:ltr;unicode-bidi:isolate}
+pre{direction:ltr;text-align:left;background:var(--codebg);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;line-height:1.5}
+pre code{background:none;border:0;padding:0;font-size:0.85rem;white-space:pre}
+.tw{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:0.92rem}
+th,td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th{background:var(--th);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+nav.toc{background:var(--codebg);border:1px solid var(--line);border-radius:6px;padding:4px 18px 10px;margin:1.2em 0}
+nav.toc h2{border:0;margin:0.6em 0 0.2em;font-size:1.1rem}
+nav.toc ol{margin:0;padding-right:1.4em}
+ul,ol{padding-right:1.4em;padding-left:0}
+strong{font-weight:700}
+@media (max-width:600px){body{font-size:15px}h1{font-size:1.4rem}h2{font-size:1.2rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>راهنمای کد پژوهش «حافظه‌ی هندآور»</h1>
+<p>این راهنما برای کسی نوشته شده که برنامه‌نویسی کمی می‌داند و می‌خواهد بفهمد در این مخزن چه هست، چطور آن را اجرا کند و عددهای خروجی را چطور بخواند. نام فایل‌ها، فرمان‌ها و شناسه‌های کد به انگلیسی آمده‌اند؛ هر جا فرمانی هست، همان را عیناً تایپ کنید.</p>
+<nav class="toc"><h2>فهرست</h2>
+<ol><li><a href="#sec-what">این پژوهش چه می‌پرسد</a></li><li><a href="#sec-words">چند واژه که لازم است</a></li><li><a href="#sec-map">نقشه‌ی پوشه‌ها: هر فایل چه می‌کند</a></li><li><a href="#sec-install">نصب Python و آماده‌سازی، گام به گام</a></li><li><a href="#sec-smoke">آزمون کوتاه (smoke test)، گام به گام</a></li><li><a href="#sec-quick">مثال کوچک و تغییر یک پارامتر</a></li><li><a href="#sec-shadow">مدل سایه‌افکنی به زبان ساده</a></li><li><a href="#sec-rule">قاعده‌ی حافظه‌دار و کنترل آن</a></li><li><a href="#sec-index">شاخص تکرارپذیری</a></li><li><a href="#sec-run">اجرای کل پژوهش، تحلیل و شکل‌ها</a></li><li><a href="#sec-runs">خواندن <code dir="ltr">runs.jsonl</code></a></li><li><a href="#sec-summary">خواندن <code dir="ltr">summary.json</code></a></li><li><a href="#sec-figs">شکل‌ها</a></li><li><a href="#sec-change">تغییر یک پارامتر در کل پژوهش و اجرای دوباره</a></li><li><a href="#sec-errors">خطاهای رایج</a></li><li><a href="#sec-glossary">واژه‌نامه</a></li></ol></nav>
+<h2 id="sec-what">۱. این پژوهش چه می‌پرسد</h2>
+<p>وقتی کاربر تلفن همراه حرکت می‌کند، شبکه او را از یک سلول به سلول دیگر می‌سپارد؛ به این کار هندآور (handover) می‌گویند. بعضی هندآورها بی‌فایده‌اند: کاربر مدت کوتاهی در سلول تازه می‌ماند یا کیفیتش بهتر نمی‌شود. خیلی از روش‌ها برای کم‌کردن هندآور بی‌فایده «حافظه» دارند: یادشان می‌ماند که هندآورهای قبلی در هر مکان چه نتیجه‌ای داشته‌اند و تصمیم بعدی را با آن تنظیم می‌کنند.</p>
+<p>همه‌ی این روش‌ها یک فرض پنهان دارند: نتیجه‌ی هندآور در یک مکان، درباره‌ی هندآور بعدی در همان مکان چیزی می‌گوید. این پژوهش همین فرض را می‌سنجد:</p>
+<ul><li>در کدام محیط‌ها حافظه‌ی مکانی به قاعده‌ی ساده‌ی A3 کمک می‌کند و در کدام محیط‌ها ضرر می‌زند؟</li><li>آیا می‌شود این را از پیش فهمید؛ یعنی فقط از روی لاگ کار عادی شبکه (بدون هیچ حافظه‌ای)؟</li></ul>
+<p>برای پاسخ، دو قاعده روی ورودی‌های کاملاً یکسان اجرا می‌شوند: <strong>کنترل</strong> (A3 ساده) و <strong>قاعده‌ی حافظه‌دار</strong> (همان A3 به‌اضافه‌ی یک جمله‌ی حافظه). تفاوت نتیجه‌ی این دو، اثر حافظه است. جدا از این، از لاگ اجرای کنترل یک <strong>شاخص تکرارپذیری</strong> حساب می‌شود و بررسی می‌شود که آیا این شاخص اثر حافظه را پیش‌بینی می‌کند.</p>
+<h2 id="sec-words">۲. چند واژه که لازم است</h2>
+<div class="tw"><table><thead><tr><th>واژه</th><th>معنا</th></tr></thead><tbody><tr><td>هندآور (HO)</td><td>سپردن کاربر از سلول فعلی (مبدأ) به سلول دیگر (مقصد)</td></tr><tr><td>هندآور بی‌فایده</td><td>هندآوری که کاربر پس از آن کمتر از زمان لازم در مقصد ماند، یا کیفیتش نسبت به مبدأ بهتر نشد</td></tr><tr><td>شکست (failure)</td><td>قطع‌شدن پیوند رادیویی؛ یا چون هندآور دیر انجام شد (too late) یا چون زود و به سلول نامناسب انجام شد (too early)</td></tr><tr><td>A3</td><td>قاعده‌ی استاندارد 3GPP: اگر سیگنال همسایه به اندازه‌ی یک حاشیه از سلول فعلی قوی‌تر شد و این وضع مدتی ماند، هندآور کن</td></tr><tr><td>هیسترزیس</td><td>همان حاشیه بر حسب dB؛ هر چه بزرگ‌تر، هندآور سخت‌تر</td></tr><tr><td>TTT</td><td>مدتی که شرط A3 باید برقرار بماند (time-to-trigger)</td></tr><tr><td>سایه‌افکنی</td><td>افت‌وخیز کند سیگنال به خاطر ساختمان‌ها و موانع</td></tr><tr><td>seed</td><td>عددی که دنباله‌ی اعداد تصادفی را ثابت می‌کند؛ با seed یکسان، اجرا عیناً تکرار می‌شود</td></tr><tr><td>کاربر-دقیقه</td><td>واحد شمارش: یک کاربر در یک دقیقه. نرخ‌ها «در هر کاربر-دقیقه» گزارش می‌شوند تا به تعداد کاربر و طول اجرا وابسته نباشند</td></tr><tr><td>گرم‌کردن (warm-up)</td><td>اجرای مقدماتی که در آن قاعده‌ی حافظه‌دار جدولش را پر می‌کند؛ نتیجه‌ی آن شمرده نمی‌شود</td></tr></tbody></table></div>
+<h2 id="sec-map">۳. نقشه‌ی پوشه‌ها: هر فایل چه می‌کند</h2>
+<div class="tw"><table><thead><tr><th>مسیر</th><th>نقش</th></tr></thead><tbody><tr><td><code dir="ltr">hosim/</code></td><td>شبیه‌ساز سطح سیستم این پژوهش</td></tr><tr><td><code dir="ltr">memstudy/</code></td><td>قاعده‌ی حافظه‌دار و شاخص تکرارپذیری</td></tr><tr><td><code dir="ltr">experiments/</code></td><td>اسکریپت‌های اجرا، تحلیل و رسم شکل</td></tr><tr><td><code dir="ltr">examples/quickstart.py</code></td><td>مثال کوچک برای آزمودن و بازی‌کردن با پارامترها</td></tr><tr><td><code dir="ltr">data/synthetic/</code></td><td>چیدمان ۴۰ سلولی مصنوعی (نام آن در کد: <code dir="ltr">UDN-40</code>)</td></tr><tr><td><code dir="ltr">results/</code></td><td>فایل‌های نتیجه</td></tr><tr><td><code dir="ltr">figures/</code></td><td>پنج شکل مقاله (PDF و PNG)</td></tr><tr><td><code dir="ltr">docs/</code></td><td>همین راهنما</td></tr><tr><td><code dir="ltr">run_all.sh</code></td><td>اجرای کل زنجیره با یک فرمان</td></tr><tr><td><code dir="ltr">requirements.txt</code></td><td>فهرست کتابخانه‌های لازم Python</td></tr></tbody></table></div>
+<p>فایل‌ها یکی‌یکی:</p>
+<div class="tw"><table><thead><tr><th>فایل</th><th>چه می‌کند</th></tr></thead><tbody><tr><td><code dir="ltr">hosim/simulator.py</code></td><td>قلب شبیه‌ساز. همه‌ی کاربران را با گام <code dir="ltr">0.1 s</code> جلو می‌برد، سیگنال و تداخل و بار سلول‌ها را حساب می‌کند، هندآورها را اجرا می‌کند و به هر کدام برچسب نتیجه می‌زند. پارامترها در <code dir="ltr">SimParams</code> هستند و تابع اصلی <code dir="ltr">simulate</code> است</td></tr><tr><td><code dir="ltr">hosim/policies.py</code></td><td>رابط یک قاعده‌ی تصمیم (<code dir="ltr">Base</code>) و قاعده‌ی <code dir="ltr">A3</code></td></tr><tr><td><code dir="ltr">hosim/radiomap.py</code></td><td>از جدول <code dir="ltr">CSV</code>، جای سلول‌ها و مدل افت مسیر هر سلول را برآورد می‌کند</td></tr><tr><td><code dir="ltr">hosim/mobility.py</code></td><td>پنج الگوی حرکت: پیاده، خودرو در فضای باز، شبکه‌ی خیابانی، بزرگراه، قطار</td></tr><tr><td><code dir="ltr">hosim/services.py</code></td><td>پنج نوع سرویس (صدا، تماس تصویری، بازی، پخش ویدئو، وب) و آستانه‌های هر کدام</td></tr><tr><td><code dir="ltr">memstudy/rule.py</code></td><td>قاعده‌ی حافظه‌دار <code dir="ltr">MemA3</code></td></tr><tr><td><code dir="ltr">memstudy/repeatability.py</code></td><td>محاسبه‌ی شاخص تکرارپذیری از روی لاگ رویدادها</td></tr><tr><td><code dir="ltr">experiments/common.py</code></td><td>مسیر پوشه‌ها، ساختن محیط رادیویی، تقسیم سایه‌افکنی (<code dir="ltr">shadow</code>) و ساختن سناریو (<code dir="ltr">scenario</code>)</td></tr><tr><td><code dir="ltr">experiments/run_study.py</code></td><td>فهرست همه‌ی ۷۱۰ اجرا و اجراکننده‌ی آن‌ها؛ خروجی: <code dir="ltr">results/runs.jsonl</code></td></tr><tr><td><code dir="ltr">experiments/analyze.py</code></td><td>آمار و شاخص‌ها؛ خروجی: <code dir="ltr">results/summary.json</code></td></tr><tr><td><code dir="ltr">experiments/make_figures.py</code></td><td>رسم پنج شکل از روی <code dir="ltr">summary.json</code></td></tr><tr><td><code dir="ltr">experiments/plotstyle.py</code></td><td>ظاهر شکل‌ها (قلم، رنگ، اندازه)</td></tr></tbody></table></div>
+<p>مسیر داده از ابتدا تا انتها:</p>
+<pre dir="ltr"><code>CSV layout -&gt; RadioMap -&gt; RadioEnv (shadowing field, hotspots, blockage)
+                               |
+seed -&gt; scenario(): trajectories + services   (the same for both rules)
+                               |
+rule (A3 or MemA3) -&gt; simulate(...) -&gt; metrics of one run  (+ event log for control runs)
+                               |
+run_study.py -&gt; results/runs.jsonl  (one line per run)  +  results/logs/*.npz
+                               |
+analyze.py -&gt; results/summary.json -&gt; make_figures.py -&gt; figures/fig_*.pdf</code></pre>
+<h2 id="sec-install">۴. نصب Python و آماده‌سازی، گام به گام</h2>
+<p>این گام‌ها برای ویندوز نوشته شده‌اند؛ در لینوکس و مک فقط گام نصب Python فرق دارد.</p>
+<ol><li><strong>نصب Python.</strong> از نشانی <code dir="ltr">https://www.python.org/downloads/</code> نسخه‌ی 3.12 را بگیرید و نصب کنید. در اولین پنجره‌ی نصب، تیک گزینه‌ی <code dir="ltr">Add python.exe to PATH</code> را بزنید؛ اگر این تیک را نزنید، فرمان <code dir="ltr">python</code> شناخته نمی‌شود.</li><li><strong>بازکردن پنجره‌ی فرمان.</strong> کلید ویندوز را بزنید، <code dir="ltr">PowerShell</code> را تایپ و باز کنید.</li><li><strong>آزمودن نصب.</strong> این فرمان را بزنید؛ باید شماره‌ی نسخه چاپ شود:</li></ol>
+<pre dir="ltr"><code>python --version</code></pre>
+<ol start="4"><li><strong>گرفتن مخزن.</strong> اگر <code dir="ltr">git</code> دارید:</li></ol>
+<pre dir="ltr"><code>git clone https://github.com/mjs19971997/handover-memory-study.git
+cd handover-memory-study</code></pre>
+<p>اگر <code dir="ltr">git</code> ندارید، در صفحه‌ی مخزن روی دکمه‌ی <code dir="ltr">Code</code> و سپس <code dir="ltr">Download ZIP</code> بزنید، فایل را باز کنید و در PowerShell با فرمان <code dir="ltr">cd</code> به پوشه‌ی بازشده بروید (مثلاً <code dir="ltr">cd C:\Users\me\Downloads\handover-memory-study-main</code>).</p>
+<ol start="5"><li><strong>نصب کتابخانه‌ها.</strong> این فرمان چهار کتابخانه‌ی <code dir="ltr">numpy</code>، <code dir="ltr">pandas</code>، <code dir="ltr">scipy</code> و <code dir="ltr">matplotlib</code> را با همان نسخه‌هایی که آزمایش‌ها با آن‌ها اجرا شده‌اند نصب می‌کند:</li></ol>
+<pre dir="ltr"><code>pip install -r requirements.txt</code></pre>
+<p>از این پس همه‌ی فرمان‌ها را در همین پوشه‌ی اصلی مخزن اجرا کنید (همان پوشه‌ای که <code dir="ltr">README.md</code> در آن است).</p>
+<h2 id="sec-smoke">۵. آزمون کوتاه (smoke test)، گام به گام</h2>
+<p>این آزمون چهار اجرای ۳۰ ثانیه‌ای انجام می‌دهد تا مطمئن شوید همه‌چیز درست نصب شده است. حدود یک دقیقه طول می‌کشد.</p>
+<pre dir="ltr"><code>python experiments/run_study.py smoke</code></pre>
+<p>خروجی چیزی شبیه این است (ستون <code dir="ltr">time</code> روی هر رایانه فرق می‌کند؛ بقیه‌ی عددها با کتابخانه‌های <code dir="ltr">requirements.txt</code> باید همین باشند):</p>
+<pre dir="ltr"><code>[smoke] 4 jobs, 4 to run
+[smoke] 4/4  34s
+
+profile    phi  rule                HO  unnec.  failed   UHO_pm  fail_pm   time
+highway    0.5  A3 (control)      1608     599     103     3.99     0.69    10s
+highway    0.5  memory, eta=8     1540     543     120     3.62     0.81    18s
+street     1.0  A3 (control)       886     199      49     1.33     0.37    11s
+street     1.0  memory, eta=0      886     199      49     1.33     0.37    19s
+
+memory rule with eta = 0 equals the control (street): yes
+event log of the highway control run: 1452 events in 550 places, rho = 0.32, skill = 0.04
+smoke test passed</code></pre>
+<p>خواندن این جدول:</p>
+<div class="tw"><table><thead><tr><th>ستون</th><th>معنا</th></tr></thead><tbody><tr><td><code dir="ltr">profile</code></td><td>الگوی حرکت کاربران</td></tr><tr><td><code dir="ltr">phi</code></td><td>سهم مشترک سایه‌افکنی (بخش ۷)</td></tr><tr><td><code dir="ltr">rule</code></td><td>قاعده: کنترل یا حافظه‌دار با قدرت <code dir="ltr">eta</code></td></tr><tr><td><code dir="ltr">HO</code></td><td>تعداد کل هندآورها در این اجرا</td></tr><tr><td><code dir="ltr">unnec.</code></td><td>تعداد هندآورهای بی‌فایده</td></tr><tr><td><code dir="ltr">failed</code></td><td>تعداد هندآورهایی که برچسب شکست گرفتند</td></tr><tr><td><code dir="ltr">UHO_pm</code></td><td>هندآور بی‌فایده در هر کاربر-دقیقه</td></tr><tr><td><code dir="ltr">fail_pm</code></td><td>شکست در هر کاربر-دقیقه</td></tr></tbody></table></div>
+<p>سه نکته در این خروجی:</p>
+<ul><li>دو سطر آخر عیناً برابرند. قاعده‌ی حافظه‌دار با <code dir="ltr">eta = 0</code> همان کنترل است و آزمون همین را می‌سنجد (سطر <code dir="ltr">equals the control ... yes</code>).</li><li>در دو سطر اول، حافظه با <code dir="ltr">eta = 8</code> هندآور بی‌فایده را از <code dir="ltr">3.99</code> به <code dir="ltr">3.62</code> کم کرده و شکست را از <code dir="ltr">0.69</code> به <code dir="ltr">0.81</code> زیاد کرده است. اجرای ۳۰ ثانیه‌ای برای نتیجه‌گیری خیلی کوتاه است؛ این فقط آزمون سالم‌بودن زنجیره است.</li><li>سطر <code dir="ltr">event log</code> نشان می‌دهد لاگ رویداد نوشته و شاخص از روی آن حساب شده است.</li></ul>
+<p>اگر سطر آخر <code dir="ltr">smoke test passed</code> بود، همه‌چیز آماده است. خروجی این آزمون در <code dir="ltr">results/smoke/</code> نوشته می‌شود و به نتایج اصلی دست نمی‌زند.</p>
+<h2 id="sec-quick">۶. مثال کوچک و تغییر یک پارامتر</h2>
+<pre dir="ltr"><code>python examples/quickstart.py</code></pre>
+<p>این اسکریپت یک سناریوی کوچک می‌سازد (۱۰۰ کاربر در بزرگراه، ۶۰ ثانیه)، کنترل و قاعده‌ی حافظه‌دار را روی آن اجرا می‌کند و شاخص را از لاگ کنترل حساب می‌کند. خروجی:</p>
+<pre dir="ltr"><code>UDN-40, highway, 100 users, 60 s, phi = 1.0, d_corr = 50 m
+
+metric                                      A3    memory    change
+handovers per user-minute               11.210     8.900      -21%
+unnecessary HOs per user-minute          4.710     2.790      -41%
+unnecessary-handover ratio               0.441     0.327      -26%
+mobility failures per user-minute        0.360     0.460      +28%
+outage [%]                               0.892     1.222      +37%
+delivered / demanded rate                0.970     0.953       -2%
+
+control run: 1071 logged events in 363 places (3.0 per place)
+repeatability rho = 0.48, prequential skill = 0.16, split-half correlation = 0.82</code></pre>
+<p>ستون <code dir="ltr">change</code> تغییر نسبی قاعده‌ی حافظه‌دار نسبت به کنترل است؛ عدد منفی یعنی کمتر شده است.</p>
+<p><strong>تغییر یک پارامتر.</strong> فایل <code dir="ltr">examples/quickstart.py</code> را با یک ویرایشگر متن (مثلاً Notepad) باز کنید. بالای فایل این سطرها هستند:</p>
+<pre dir="ltr"><code>PROFILE = &quot;highway&quot;     # pedestrian | vehicular | street | highway | train
+USERS = 100             # number of users
+T = 60.0                # length of the test run [s]
+WARM = 60.0             # length of the warm-up of the memory rule [s]
+SEED = 1                # seed of the environment, the trajectories and the shadowing
+PHI = 1.0               # shared share of the shadowing variance
+D_CORR = 50.0           # decorrelation distance of the shadowing [m]
+HYST, TTT = 4.0, 0.1    # A3 hysteresis [dB] and time-to-trigger [s] of both rules
+ETA = 24.0              # strength of the memory [dB]</code></pre>
+<p>فقط یک عدد را عوض کنید، فایل را ذخیره کنید و همان فرمان را دوباره بزنید. چند آزمایش پیشنهادی:</p>
+<div class="tw"><table><thead><tr><th>تغییر</th><th>چه چیزی را می‌آزماید</th><th>نتیجه‌ی نمونه</th></tr></thead><tbody><tr><td><code dir="ltr">PHI = 0.0</code></td><td>سایه‌افکنی هیچ بخش مشترکی ندارد؛ مکان چیز کمتری درباره‌ی نتیجه می‌گوید</td><td>تغییر هندآور بی‌فایده از <code dir="ltr">-41%</code> به <code dir="ltr">+17%</code> می‌رسد و <code dir="ltr">skill</code> از <code dir="ltr">0.16</code> به <code dir="ltr">0.01</code></td></tr><tr><td><code dir="ltr">PROFILE = &quot;pedestrian&quot;</code></td><td>کاربران کند؛ رویداد کم در مکان‌های زیاد</td><td>تغییر هندآور بی‌فایده <code dir="ltr">+7%</code>؛ فقط <code dir="ltr">1.1</code> رویداد در هر مکان و <code dir="ltr">skill</code> برابر <code dir="ltr">-0.01</code></td></tr><tr><td><code dir="ltr">ETA = 0.0</code></td><td>حافظه خاموش؛ دو ستون باید عیناً برابر شوند</td><td>در همه‌ی سطرها <code dir="ltr">0%</code></td></tr></tbody></table></div>
+<p>این اجراها کوتاه و تک‌seed هستند و عددهایشان نوسان دارد؛ نتیجه‌های مقاله از اجرای کامل بخش ۱۰ می‌آیند.</p>
+<h2 id="sec-shadow">۷. مدل سایه‌افکنی به زبان ساده</h2>
+<p>سایه‌افکنی کند میان یک کاربر و یک سلول، جمع سه بخش است:</p>
+<div class="tw"><table><thead><tr><th>بخش</th><th>انحراف معیار</th><th>رفتار</th></tr></thead><tbody><tr><td>مشترک</td><td><code dir="ltr">sigma_s</code></td><td>یک میدان ثابت روی نقشه برای هر سلول. هر کاربری که از یک نقطه بگذرد همان مقدار را می‌بیند</td></tr><tr><td>خصوصی</td><td><code dir="ltr">sigma_p</code></td><td>برای هر کاربر جدا؛ در طول مسیر خودش آرام تغییر می‌کند و به کاربران دیگر ربطی ندارد</td></tr><tr><td>سریع</td><td><code dir="ltr">1.5 dB</code></td><td>تغییرات زمانی با زمان همبستگی <code dir="ltr">1 s</code></td></tr></tbody></table></div>
+<p>مجموع توان دو بخش اول ثابت است و فقط سهم‌ها عوض می‌شوند:</p>
+<pre dir="ltr"><code>sigma_s^2 + sigma_p^2 = (4 dB)^2
+phi = sigma_s^2 / (sigma_s^2 + sigma_p^2)</code></pre>
+<ul><li><code dir="ltr">phi = 1</code>: همه‌ی سایه‌افکنی مشترک است. آنچه در یک مکان برای یک کاربر پیش آمد، برای کاربر بعدی هم پیش می‌آید؛ پس حافظه‌ی مکانی معنا دارد.</li><li><code dir="ltr">phi = 0</code>: هیچ بخش مشترکی نیست. هر کاربر در همان مکان چیز دیگری می‌بیند.</li><li><code dir="ltr">d_c</code> (در کد <code dir="ltr">d_corr</code>): فاصله‌ای که پس از آن سایه‌افکنی عوض می‌شود. <code dir="ltr">d_c</code> کوچک یعنی تغییرات ریز و پرتعداد.</li></ul>
+<p>پژوهش همه‌ی ترکیب‌های <code dir="ltr">phi</code> از مجموعه‌ی <code dir="ltr">1, 0.75, 0.5, 0.25, 0</code> و <code dir="ltr">d_c</code> از مجموعه‌ی <code dir="ltr">12.5, 25, 50, 100, 200</code> متر را می‌آزماید (۲۵ خانه). خانه‌ی <code dir="ltr">phi = 1</code> و <code dir="ltr">d_c = 50 m</code> «محیط مرجع» نام دارد. در کد، تابع <code dir="ltr">shadow(phi, d_corr)</code> در <code dir="ltr">experiments/common.py</code> این تقسیم را انجام می‌دهد.</p>
+<h2 id="sec-rule">۸. قاعده‌ی حافظه‌دار و کنترل آن</h2>
+<p>قاعده‌ی <code dir="ltr">MemA3</code> (فایل <code dir="ltr">memstudy/rule.py</code>) همان A3 است، با این تفاوت که حاشیه برای هر «مکان» و هر سلول مقصد جدا تعیین می‌شود:</p>
+<pre dir="ltr"><code>margin = h + eta * (risk - mean risk)        clipped to [0, 9] dB
+risk   = P(unnecessary) + P(early failure) - P(too late)</code></pre>
+<p>به زبان ساده:</p>
+<ul><li>نقشه به خانه‌های <code dir="ltr">40 m</code> تقسیم شده است. برای هر (خانه، سلول مقصد) چهار شمارنده نگه داشته می‌شود: مفید، بی‌فایده، شکست زودهنگام، دیرشده.</li><li>اگر در یک خانه هندآور به یک مقصد معمولاً بی‌فایده بوده، <code dir="ltr">risk</code> بزرگ است و حاشیه بالا می‌رود (هندآور سخت‌تر می‌شود). اگر آنجا معمولاً پیوند پیش از هندآور قطع شده، <code dir="ltr">risk</code> منفی است و حاشیه پایین می‌آید (هندآور زودتر انجام می‌شود).</li><li><code dir="ltr">mean risk</code> همین مقدار برای کل شبکه است. با کم‌کردن آن، میانگین جابه‌جایی صفر می‌شود؛ یعنی قاعده حاشیه را همه‌جا با هم بالا یا پایین نمی‌برد، فقط میان مکان‌ها فرق می‌گذارد.</li><li>خانه‌ای که هنوز سابقه ندارد همان حاشیه‌ی <code dir="ltr">h</code> را می‌گیرد (به کمک <code dir="ltr">kappa = 3</code> مشاهده‌ی فرضی). شمارنده‌ها با ثابت زمانی <code dir="ltr">600 s</code> کم‌کم فراموش می‌شوند.</li><li><code dir="ltr">eta</code> قدرت واکنش بر حسب dB است.</li></ul>
+<p><strong>کنترل.</strong> با <code dir="ltr">eta = 0</code> این قاعده دقیقاً A3 با همان <code dir="ltr">h</code> و همان TTT است. در همه‌ی مقایسه‌ها <code dir="ltr">h = 4 dB</code> و TTT برابر <code dir="ltr">0.1 s</code> است؛ این تنظیم A3 در اجراهای مقدماتی برای همین چیدمان به دست آمده است. هر دو قاعده مسیر حرکت، سرویس و سایه‌افکنی یکسان می‌بینند، پس هر تفاوتی در نتیجه فقط از جمله‌ی حافظه است.</p>
+<p><strong>گرم‌کردن.</strong> پیش از هر اجرای آزمون، قاعده‌ی حافظه‌دار <code dir="ltr">240 s</code> روی مسیرهای دیگری در همان محیط اجرا می‌شود تا جدولش خالی نباشد.</p>
+<p><strong>انتخاب <code dir="ltr">eta</code>.</strong> یک بار و روی seedهای جدا (<code dir="ltr">101</code> و <code dir="ltr">102</code>) انجام شده است: از میان <code dir="ltr">2, 4, 8, 12, 16, 24</code> آن‌هایی که نرخ شکستشان از A3 با <code dir="ltr">3 dB</code> و <code dir="ltr">0.3 s</code> بیشتر نیست نگه داشته می‌شوند و از میان آن‌ها مقداری که کمترین هندآور بی‌فایده را دارد برگزیده می‌شود. نتیجه در <code dir="ltr">results/tuned_eta.json</code> است: <code dir="ltr">eta = 24</code>.</p>
+<h2 id="sec-index">۹. شاخص تکرارپذیری</h2>
+<p>اجرای کنترل (A3) به مدت <code dir="ltr">720 s</code> یک «لاگ رویداد» می‌نویسد: برای هر هندآور و هر شکست دیرشده یک سطر، همراه با مکان تصمیم. به هر رویداد یک نمره‌ی <code dir="ltr">z</code> داده می‌شود:</p>
+<div class="tw"><table><thead><tr><th>نتیجه</th><th><code dir="ltr">z</code></th></tr></thead><tbody><tr><td>بی‌فایده یا شکست زودهنگام</td><td><code dir="ltr">+1</code></td></tr><tr><td>مفید</td><td><code dir="ltr">0</code></td></tr><tr><td>دیرشده</td><td><code dir="ltr">-1</code></td></tr></tbody></table></div>
+<p>سپس رویدادها بر اساس (خانه، سلول مقصد) گروه می‌شوند و این عددها حساب می‌شوند (فایل <code dir="ltr">memstudy/repeatability.py</code>):</p>
+<div class="tw"><table><thead><tr><th>نام</th><th>معنا</th><th>چطور بخوانیم</th></tr></thead><tbody><tr><td><code dir="ltr">rho</code></td><td>همبستگی درون‌گروهی <code dir="ltr">z</code>: چه سهمی از پراکندگی نتیجه‌ها به «مکان» مربوط است</td><td><code dir="ltr">0</code> یعنی مکان هیچ نمی‌گوید؛ <code dir="ltr">1</code> یعنی مکان همه‌چیز را تعیین می‌کند</td></tr><tr><td><code dir="ltr">n</code></td><td>میانگین تعداد رویداد در هر مکان دیده‌شده</td><td>هر چه بیشتر، شواهد هر مکان بیشتر</td></tr><tr><td><code dir="ltr">skill</code></td><td>مهارت پیش‌بینی یک جدول: هر رویداد فقط از رویدادهای قبلی همان مکان پیش‌بینی می‌شود و خطا با خطای «میانگین کل» مقایسه می‌شود</td><td>مثبت یعنی جدول از میانگین کل بهتر است؛ صفر یا منفی یعنی بهتر نیست</td></tr><tr><td><code dir="ltr">half</code></td><td>همبستگی دونیمه: میانگین <code dir="ltr">z</code> هر مکان از نگاه کاربران با شماره‌ی زوج در برابر کاربران با شماره‌ی فرد</td><td>نزدیک <code dir="ltr">1</code> یعنی دو گروه جدا از کاربران درباره‌ی مکان‌ها هم‌نظرند</td></tr><tr><td><code dir="ltr">law</code></td><td>مهارتی که فقط از روی <code dir="ltr">rho</code> و تعداد رویدادها انتظار می‌رود</td><td>برای مقایسه با <code dir="ltr">skill</code></td></tr></tbody></table></div>
+<p>نکته‌ی اصلی: در محاسبه‌ی این عددها هیچ قاعده‌ی حافظه‌داری دخالت ندارد. یافته‌ی پژوهش این است که <code dir="ltr">rho</code> به‌تنهایی اثر حافظه را پیش‌بینی نمی‌کند، ولی <code dir="ltr">n</code> و <code dir="ltr">skill</code> می‌کنند: اگر <code dir="ltr">skill</code> از حدود <code dir="ltr">0.03</code> بیشتر باشد حافظه سود می‌دهد و اگر کمتر باشد ضرر.</p>
+<h2 id="sec-run">۱۰. اجرای کل پژوهش، تحلیل و شکل‌ها</h2>
+<p>سه فرمان، به ترتیب:</p>
+<pre dir="ltr"><code>python experiments/run_study.py
+python experiments/analyze.py
+python experiments/make_figures.py</code></pre>
+<div class="tw"><table><thead><tr><th>گام</th><th>خروجی</th><th>زمان تقریبی</th></tr></thead><tbody><tr><td><code dir="ltr">run_study.py</code></td><td><code dir="ltr">results/runs.jsonl</code>، <code dir="ltr">results/tuned_eta.json</code>، <code dir="ltr">results/logs/</code></td><td>۷۱۰ اجرا؛ حدود <code dir="ltr">2.6</code> ساعت با ۶ پردازه</td></tr><tr><td><code dir="ltr">analyze.py</code></td><td><code dir="ltr">results/summary.json</code></td><td>حدود ۳ دقیقه</td></tr><tr><td><code dir="ltr">make_figures.py</code></td><td><code dir="ltr">figures/fig_*.pdf</code> و <code dir="ltr">.png</code></td><td>چند ثانیه</td></tr></tbody></table></div>
+<p>چند نکته‌ی مهم:</p>
+<ul><li><strong>نتیجه‌ها از قبل در مخزن هستند.</strong> <code dir="ltr">run_study.py</code> هر اجرایی را که سطرش در <code dir="ltr">runs.jsonl</code> باشد دوباره انجام نمی‌دهد؛ پس با فایل‌های همین مخزن، این فرمان کاری برای انجام ندارد و فوراً تمام می‌شود. فرمان <code dir="ltr">python experiments/run_study.py status</code> نشان می‌دهد چه چیزهایی انجام شده است.</li><li><strong>ادامه‌پذیر است.</strong> اگر اجرا وسط کار قطع شد، همان فرمان را دوباره بزنید؛ از همان‌جا ادامه می‌دهد.</li><li><strong>لاگ‌های رویداد در مخزن نیستند</strong> چون حجمشان زیاد است (حدود <code dir="ltr">120 MB</code>). <code dir="ltr">summary.json</code> در مخزن هست، پس برای رسم شکل‌ها به لاگ نیازی نیست. ولی <code dir="ltr">analyze.py</code> به لاگ‌ها نیاز دارد و بدون آن‌ها با یک پیام روشن می‌ایستد. برای ساختن دوباره‌ی لاگ‌ها:</li></ul>
+<pre dir="ltr"><code>python experiments/run_study.py logs</code></pre>
+<p>این فرمان ۱۷۴ اجرای کنترل بلند را تکرار می‌کند (حدود یک ساعت با ۶ پردازه) و هر اجرا را با سطر خودش در <code dir="ltr">runs.jsonl</code> مقایسه می‌کند؛ چون اجراها قطعی‌اند باید عیناً برابر باشند.</p>
+<ul><li><strong>تعداد پردازه‌ها.</strong> به‌طور پیش‌فرض همه‌ی هسته‌ها منهای یکی. برای تغییر، پیش از فرمان اصلی در PowerShell بنویسید:</li></ul>
+<pre dir="ltr"><code>$env:MEMSTUDY_PROCS = &quot;4&quot;</code></pre>
+<h2 id="sec-runs">۱۱. خواندن <code dir="ltr">runs.jsonl</code></h2>
+<p>هر سطر این فایل یک اجرای کامل است و به شکل یک شیء JSON نوشته شده: فهرستی از «نام: مقدار». فایل را می‌توان با هر ویرایشگر متنی باز کرد، ولی سطرها بلندند؛ خواندن با چند سطر Python راحت‌تر است. این متن را در فایلی به نام <code dir="ltr">look.py</code> در پوشه‌ی اصلی مخزن ذخیره کنید:</p>
+<pre dir="ltr"><code>import json
+
+rows = [json.loads(line) for line in open(&quot;results/runs.jsonl&quot;, encoding=&quot;utf-8&quot;)]
+print(len(rows), &quot;runs&quot;)
+
+# reference environment, highway: control against memory rule
+ctrl = [r for r in rows if r[&quot;block&quot;] == &quot;ref&quot; and r[&quot;profile&quot;] == &quot;highway&quot; and r[&quot;kind&quot;] == &quot;A3&quot; and r[&quot;T&quot;] == 240]
+mem = [r for r in rows if r[&quot;block&quot;] == &quot;ref&quot; and r[&quot;profile&quot;] == &quot;highway&quot; and r[&quot;kind&quot;] == &quot;Mem&quot;]
+a = sum(r[&quot;UHO_pm&quot;] for r in ctrl) / len(ctrl)
+b = sum(r[&quot;UHO_pm&quot;] for r in mem) / len(mem)
+print(&quot;control&quot;, round(a, 3), &quot;memory&quot;, round(b, 3), &quot;change %&quot;, round(100 * (b / a - 1), 1))</code></pre>
+<p>و اجرا کنید:</p>
+<pre dir="ltr"><code>python look.py</code></pre>
+<p>خروجی:</p>
+<pre dir="ltr"><code>710 runs
+control 3.917 memory 1.385 change % -64.6</code></pre>
+<p>یعنی در بزرگراه و محیط مرجع، حافظه هندآور بی‌فایده را از <code dir="ltr">3.917</code> به <code dir="ltr">1.385</code> در هر کاربر-دقیقه رسانده است؛ کاهش <code dir="ltr">64.6</code> درصدی.</p>
+<p><strong>فیلدهای توصیف اجرا:</strong></p>
+<div class="tw"><table><thead><tr><th>فیلد</th><th>معنا</th></tr></thead><tbody><tr><td><code dir="ltr">id</code></td><td>نام یکتای اجرا؛ همه‌ی مشخصات در آن آمده است</td></tr><tr><td><code dir="ltr">block</code></td><td>بلوک آزمایش: <code dir="ltr">tune</code>، <code dir="ltr">ref</code>، <code dir="ltr">prof</code>، <code dir="ltr">warm</code>، <code dir="ltr">res</code>، <code dir="ltr">eta</code>، <code dir="ltr">sweep</code></td></tr><tr><td><code dir="ltr">kind</code></td><td><code dir="ltr">A3</code> (کنترل) یا <code dir="ltr">Mem</code> (حافظه‌دار)</td></tr><tr><td><code dir="ltr">profile</code></td><td>الگوی حرکت</td></tr><tr><td><code dir="ltr">seed</code></td><td>شماره‌ی seed</td></tr><tr><td><code dir="ltr">T</code>، <code dir="ltr">warm</code></td><td>طول اجرای آزمون و طول گرم‌کردن بر حسب ثانیه</td></tr><tr><td><code dir="ltr">phi</code>، <code dir="ltr">d_corr</code></td><td>سهم مشترک سایه‌افکنی و فاصله‌ی ناهمبستگی بر حسب متر</td></tr><tr><td><code dir="ltr">hyst</code>، <code dir="ltr">ttt</code></td><td>هیسترزیس و TTT</td></tr><tr><td><code dir="ltr">eta</code>، <code dir="ltr">res</code>، <code dir="ltr">key</code></td><td>فقط برای حافظه‌دار: قدرت، اندازه‌ی خانه (اگر نباشد <code dir="ltr">40</code>) و نوع مکان (اگر نباشد <code dir="ltr">bin</code>)</td></tr></tbody></table></div>
+<p>یک <code dir="ltr">id</code> نمونه و معنای تکه‌هایش:</p>
+<pre dir="ltr"><code>ref-UDN-40-highway-phi1.0-d50.0-s1-T240-w240-Mem_eta24.0</code></pre>
+<div class="tw"><table><thead><tr><th>تکه</th><th>معنا</th></tr></thead><tbody><tr><td><code dir="ltr">ref</code></td><td>بلوک محیط مرجع</td></tr><tr><td><code dir="ltr">UDN-40</code></td><td>چیدمان ۴۰ سلولی</td></tr><tr><td><code dir="ltr">highway</code></td><td>بزرگراه</td></tr><tr><td><code dir="ltr">phi1.0</code>، <code dir="ltr">d50.0</code></td><td><code dir="ltr">phi = 1</code> و <code dir="ltr">d_c = 50 m</code></td></tr><tr><td><code dir="ltr">s1</code></td><td>seed شماره‌ی ۱</td></tr><tr><td><code dir="ltr">T240</code>، <code dir="ltr">w240</code></td><td>اجرای <code dir="ltr">240 s</code> پس از <code dir="ltr">240 s</code> گرم‌کردن</td></tr><tr><td><code dir="ltr">Mem_eta24.0</code></td><td>قاعده‌ی حافظه‌دار با <code dir="ltr">eta = 24</code></td></tr></tbody></table></div>
+<p><strong>فیلدهای نتیجه (مهم‌ترین‌ها):</strong></p>
+<div class="tw"><table><thead><tr><th>فیلد</th><th>معنا</th><th>مقدار در اجرای نمونه‌ی بالا</th></tr></thead><tbody><tr><td><code dir="ltr">HO</code></td><td>تعداد هندآورها</td><td><code dir="ltr">9226</code></td></tr><tr><td><code dir="ltr">unnecessary</code></td><td>تعداد هندآورهای بی‌فایده</td><td><code dir="ltr">2142</code></td></tr><tr><td><code dir="ltr">failed</code></td><td>تعداد هندآورهای با برچسب شکست</td><td><code dir="ltr">1042</code></td></tr><tr><td><code dir="ltr">UHO_pm</code></td><td>هندآور بی‌فایده در هر کاربر-دقیقه</td><td><code dir="ltr">1.785</code></td></tr><tr><td><code dir="ltr">fail_pm</code></td><td>شکست تحرک در هر کاربر-دقیقه</td><td><code dir="ltr">0.878</code></td></tr><tr><td><code dir="ltr">HO_pm</code></td><td>هندآور در هر کاربر-دقیقه</td><td><code dir="ltr">7.688</code></td></tr><tr><td><code dir="ltr">UHR</code></td><td>سهم بی‌فایده‌ها از هندآورهای برچسب‌خورده</td><td>میان <code dir="ltr">0</code> و <code dir="ltr">1</code></td></tr><tr><td><code dir="ltr">satisf</code></td><td>نسبت نرخ تحویل‌شده به نرخ خواسته‌شده</td><td>میان <code dir="ltr">0</code> و <code dir="ltr">1</code>؛ هر چه بزرگ‌تر بهتر</td></tr><tr><td><code dir="ltr">outage_pct</code></td><td>درصد زمانی که کاربر پیوند نداشته</td><td>هر چه کوچک‌تر بهتر</td></tr><tr><td><code dir="ltr">secs</code></td><td>زمان اجرا بر حسب ثانیه</td><td>به رایانه بستگی دارد</td></tr></tbody></table></div>
+<p>رابطه‌ی شمارش و نرخ ساده است. در این اجرا <code dir="ltr">300</code> کاربر به مدت <code dir="ltr">240 s</code> (یعنی <code dir="ltr">4</code> دقیقه) حضور دارند، پس <code dir="ltr">1200</code> کاربر-دقیقه:</p>
+<pre dir="ltr"><code>UHO_pm = unnecessary / (users * T / 60) = 2142 / 1200 = 1.785</code></pre>
+<p>بقیه‌ی فیلدها (مثل <code dir="ltr">UHR_voice</code> یا <code dir="ltr">sat_web</code>) همین سنجه‌ها به تفکیک سرویس و چند سنجه‌ی کمکی‌اند؛ شرح همه در <code dir="ltr">results/README.md</code> آمده است.</p>
+<h2 id="sec-summary">۱۲. خواندن <code dir="ltr">summary.json</code></h2>
+<p>این فایل خلاصه‌ی آماری همه‌ی اجراهاست و شکل‌ها از روی آن رسم می‌شوند. ساختارش تو در تو است؛ کلیدهای سطح اول:</p>
+<div class="tw"><table><thead><tr><th>کلید</th><th>محتوا</th></tr></thead><tbody><tr><td><code dir="ltr">eta</code>، <code dir="ltr">kappa</code>، <code dir="ltr">tune</code></td><td>مقدار برگزیده‌ی <code dir="ltr">eta</code>، تعداد مشاهده‌ی فرضی، جدول اعتبارسنجی</td></tr><tr><td><code dir="ltr">profiles</code></td><td>پنج الگوی حرکت در محیط مرجع (۶ seed)</td></tr><tr><td><code dir="ltr">sweep</code></td><td>۲۵ خانه‌ی <code dir="ltr">phi</code> و <code dir="ltr">d_c</code> برای خیابان و بزرگراه (۳ seed)؛ نام هر خانه از سه بخش الگو، <code dir="ltr">phi</code> و <code dir="ltr">d_c</code> ساخته شده که با خط عمودی از هم جدا شده‌اند</td></tr><tr><td><code dir="ltr">warm</code>، <code dir="ltr">res</code>، <code dir="ltr">eta_curve</code></td><td>اثر طول گرم‌کردن، اندازه‌ی خانه و قدرت <code dir="ltr">eta</code></td></tr><tr><td><code dir="ltr">res_rep</code>، <code dir="ltr">time_rep</code></td><td>شاخص‌ها برای اندازه‌های مختلف خانه و برای لاگ‌های کوتاه‌تر</td></tr><tr><td><code dir="ltr">predict</code></td><td>آیا شاخص‌ها اثر حافظه را پیش‌بینی می‌کنند</td></tr></tbody></table></div>
+<p>برای دیدن یک بخش، این را در <code dir="ltr">look2.py</code> ذخیره و اجرا کنید:</p>
+<pre dir="ltr"><code>import json
+
+S = json.load(open(&quot;results/summary.json&quot;, encoding=&quot;utf-8&quot;))
+h = S[&quot;profiles&quot;][&quot;highway&quot;]
+print(h[&quot;UHO_pm&quot;][&quot;ctrl&quot;])
+print(h[&quot;UHO_pm&quot;][&quot;mem&quot;])
+print(h[&quot;UHO_pm&quot;][&quot;rel&quot;], h[&quot;UHO_pm&quot;][&quot;p&quot;])
+print(h[&quot;rep&quot;][&quot;skill&quot;])</code></pre>
+<p>خروجی (عددها گرد شده‌اند):</p>
+<pre dir="ltr"><code>{&#x27;mean&#x27;: 3.917, &#x27;ci&#x27;: 0.403, &#x27;n&#x27;: 6}
+{&#x27;mean&#x27;: 1.385, &#x27;ci&#x27;: 0.241, &#x27;n&#x27;: 6}
+-64.64 0.03125
+{&#x27;mean&#x27;: 0.369, &#x27;ci&#x27;: 0.054, &#x27;n&#x27;: 6}</code></pre>
+<p>معنای هر عدد در یک «مقایسه» (مثلاً <code dir="ltr">S[&quot;profiles&quot;][&quot;highway&quot;][&quot;UHO_pm&quot;]</code>):</p>
+<div class="tw"><table><thead><tr><th>نام</th><th>معنا</th><th>نمونه</th></tr></thead><tbody><tr><td><code dir="ltr">ctrl.mean</code></td><td>میانگین کنترل روی seedها</td><td><code dir="ltr">3.917</code></td></tr><tr><td><code dir="ltr">ctrl.ci</code></td><td>نیم‌پهنای بازه‌ی اطمینان ۹۵ درصد؛ یعنی میانگین واقعی با اطمینان ۹۵ درصد در بازه‌ی <code dir="ltr">mean - ci</code> تا <code dir="ltr">mean + ci</code> است</td><td><code dir="ltr">0.403</code></td></tr><tr><td><code dir="ltr">ctrl.n</code></td><td>تعداد seed</td><td><code dir="ltr">6</code></td></tr><tr><td><code dir="ltr">mem</code></td><td>همین سه عدد برای قاعده‌ی حافظه‌دار</td><td><code dir="ltr">1.385</code>، <code dir="ltr">0.241</code>، <code dir="ltr">6</code></td></tr><tr><td><code dir="ltr">rel</code></td><td>تغییر نسبی میانگین بر حسب درصد: <code dir="ltr">100 * (mem / ctrl - 1)</code>. منفی یعنی حافظه کم کرده است</td><td><code dir="ltr">-64.64</code></td></tr><tr><td><code dir="ltr">diff</code></td><td>میانگین تفاضل جفتی (حافظه منهای کنترل در هر seed) با بازه‌ی اطمینانش</td><td><code dir="ltr">-2.532</code></td></tr><tr><td><code dir="ltr">rel_seed</code></td><td>تغییر نسبی برای هر seed جداگانه</td><td>شش عدد میان <code dir="ltr">-71.7</code> و <code dir="ltr">-58.6</code></td></tr><tr><td><code dir="ltr">same_sign</code></td><td>در چند seed جهت تغییر یکسان بوده</td><td><code dir="ltr">6</code> از <code dir="ltr">6</code></td></tr><tr><td><code dir="ltr">p</code></td><td>مقدار p آزمون ویلکاکسون جفتی. با ۶ seed کوچک‌ترین مقدار ممکن <code dir="ltr">0.03125</code> است؛ یعنی همه‌ی seedها هم‌جهت بوده‌اند</td><td><code dir="ltr">0.03125</code></td></tr></tbody></table></div>
+<p>این مقایسه برای پنج سنجه ذخیره شده است: <code dir="ltr">UHO_pm</code>، <code dir="ltr">fail_pm</code>، <code dir="ltr">satisf</code>، <code dir="ltr">HO_pm</code> و <code dir="ltr">UHR</code>.</p>
+<p>شاخص‌ها زیر کلید <code dir="ltr">rep</code> هستند و هر کدام <code dir="ltr">mean</code>، <code dir="ltr">ci</code> و <code dir="ltr">n</code> دارند: <code dir="ltr">rho</code>، <code dir="ltr">n</code>، <code dir="ltr">skill</code>، <code dir="ltr">law</code>، <code dir="ltr">half</code> (بخش ۹) و چند عدد کمکی: <code dir="ltr">events</code> (تعداد رویداد لاگ)، <code dir="ltr">groups</code> (تعداد مکان دیده‌شده)، <code dir="ltr">ev_pm</code> (رویداد در هر کاربر-دقیقه)، <code dir="ltr">share_un</code> و <code dir="ltr">share_early</code> و <code dir="ltr">share_late</code> (سهم هر نوع نتیجه)، <code dir="ltr">agree</code> (سهم رویدادهایی که برچسب قابل‌مشاهده‌شان با برچسب ارزیابی یکی است).</p>
+<p>کلید <code dir="ltr">predict</code>:</p>
+<div class="tw"><table><thead><tr><th>نام</th><th>معنا</th><th>مقدار</th></tr></thead><tbody><tr><td><code dir="ltr">n_points</code></td><td>تعداد محیط‌ها (۲۵ خانه برای خیابان، ۲۵ برای بزرگراه، ۳ الگوی دیگر)</td><td><code dir="ltr">53</code></td></tr><tr><td><code dir="ltr">rho.spearman_uho</code></td><td>همبستگی رتبه‌ای میان <code dir="ltr">rho</code> و تغییر هندآور بی‌فایده</td><td><code dir="ltr">-0.10</code> (تقریباً هیچ)</td></tr><tr><td><code dir="ltr">n.spearman_uho</code></td><td>همین برای <code dir="ltr">n</code></td><td><code dir="ltr">-0.95</code></td></tr><tr><td><code dir="ltr">skill.spearman_uho</code></td><td>همین برای <code dir="ltr">skill</code></td><td><code dir="ltr">-0.92</code></td></tr><tr><td><code dir="ltr">half.spearman_uho</code></td><td>همین برای <code dir="ltr">half</code></td><td><code dir="ltr">-0.93</code></td></tr><tr><td><code dir="ltr">skill_threshold.value</code></td><td>آستانه‌ای روی <code dir="ltr">skill</code> که سود را از ضرر بهتر از همه جدا می‌کند</td><td><code dir="ltr">0.032</code></td></tr><tr><td><code dir="ltr">skill_threshold.accuracy</code></td><td>سهم محیط‌هایی که این آستانه درست جدا می‌کند</td><td><code dir="ltr">0.906</code></td></tr></tbody></table></div>
+<p>همبستگی منفی و نزدیک <code dir="ltr">-1</code> یعنی هر چه شاخص بزرگ‌تر، کاهش هندآور بی‌فایده بیشتر.</p>
+<h2 id="sec-figs">۱۳. شکل‌ها</h2>
+<div class="tw"><table><thead><tr><th>فایل</th><th>چه نشان می‌دهد</th></tr></thead><tbody><tr><td><code dir="ltr">fig_profiles</code></td><td>پنج الگوی حرکت در محیط مرجع: هندآور بی‌فایده، شکست، و شاخص‌های اجرای کنترل</td></tr><tr><td><code dir="ltr">fig_sweep</code></td><td>تغییر هندآور بی‌فایده و شکست روی ۲۵ خانه‌ی <code dir="ltr">phi</code> و <code dir="ltr">d_c</code>؛ آبی یعنی کاهش، قرمز یعنی افزایش</td></tr><tr><td><code dir="ltr">fig_index</code></td><td><code dir="ltr">rho</code>، تعداد رویداد در هر مکان و <code dir="ltr">skill</code> روی همان ۲۵ خانه</td></tr><tr><td><code dir="ltr">fig_predict</code></td><td>تغییر هندآور بی‌فایده در برابر <code dir="ltr">rho</code>، <code dir="ltr">n</code> و <code dir="ltr">skill</code>؛ هر نقطه یک محیط</td></tr><tr><td><code dir="ltr">fig_curves</code></td><td>اثر طول گرم‌کردن، طول لاگ، اندازه‌ی خانه و قدرت <code dir="ltr">eta</code></td></tr></tbody></table></div>
+<p>برای ساختن دوباره‌ی شکل‌ها فقط <code dir="ltr">summary.json</code> لازم است:</p>
+<pre dir="ltr"><code>python experiments/make_figures.py</code></pre>
+<h2 id="sec-change">۱۴. تغییر یک پارامتر در کل پژوهش و اجرای دوباره</h2>
+<p>برای آزمودن یک ایده، اول از <code dir="ltr">examples/quickstart.py</code> شروع کنید (بخش ۶). اگر می‌خواهید کل پژوهش را با یک تغییر تکرار کنید:</p>
+<ol><li><strong>پوشه‌ی نتیجه‌ی تازه بسازید</strong> تا نتیجه‌های مخزن دست‌نخورده بمانند و با نتیجه‌های تازه قاطی نشوند. در PowerShell:</li></ol>
+<pre dir="ltr"><code>$env:MEMSTUDY_RESULTS = &quot;results_new&quot;</code></pre>
+<ol start="2"><li><strong>پارامتر را عوض کنید.</strong> ثابت‌های پژوهش بالای فایل <code dir="ltr">experiments/run_study.py</code> هستند:</li></ol>
+<pre dir="ltr"><code>ENV, USERS = &quot;UDN-40&quot;, 300
+H0, TTT0 = 4.0, 0.1
+ETAS = (2.0, 4.0, 8.0, 12.0, 16.0, 24.0)
+T_RUN, T_WARM, T_LOG = 240.0, 240.0, 720.0
+PHIS = (1.0, 0.75, 0.5, 0.25, 0.0)
+DCORRS = (12.5, 25.0, 50.0, 100.0, 200.0)</code></pre>
+<p>مثلاً برای آزمودن هیسترزیس <code dir="ltr">3 dB</code> به جای <code dir="ltr">4 dB</code>، مقدار <code dir="ltr">H0</code> را <code dir="ltr">3.0</code> کنید. پارامترهای خود قاعده (مثل <code dir="ltr">kappa</code> یا <code dir="ltr">tau_f</code>) در <code dir="ltr">memstudy/rule.py</code> و پارامترهای شبیه‌ساز در <code dir="ltr">SimParams</code> داخل <code dir="ltr">hosim/simulator.py</code> هستند.</p>
+<ol start="3"><li><strong>اجرا کنید:</strong></li></ol>
+<pre dir="ltr"><code>python experiments/run_study.py
+python experiments/analyze.py
+python experiments/make_figures.py</code></pre>
+<p>هشدارها:</p>
+<ul><li>همیشه با پوشه‌ی نتیجه‌ی تازه کار کنید. <code dir="ltr">run_study.py</code> اجراها را با <code dir="ltr">id</code> می‌شناسد و هر <code dir="ltr">id</code> را که در <code dir="ltr">runs.jsonl</code> ببیند دوباره اجرا نمی‌کند؛ اگر پارامتری را عوض کنید که در <code dir="ltr">id</code> نیست (مثل <code dir="ltr">USERS</code>) و پوشه همان قبلی باشد، هیچ اجرای تازه‌ای انجام نمی‌شود.</li><li><code dir="ltr">make_figures.py</code> شکل‌ها را در <code dir="ltr">figures/</code> می‌نویسد و روی شکل‌های قبلی می‌نشیند. اگر شکل‌های مخزن را لازم دارید، پیش‌تر از آن‌ها رونوشت بگیرید.</li><li>برای کوتاه‌کردن زمان می‌توانید <code dir="ltr">PHIS</code> و <code dir="ltr">DCORRS</code> را کوچک کنید (خانه‌ی مرجع را نگه دارید). <code dir="ltr">analyze.py</code> با همان فهرست‌ها کار می‌کند، ولی شکل‌های <code dir="ltr">fig_sweep</code> و <code dir="ltr">fig_index</code> همه‌ی ۲۵ خانه را می‌خواهند؛ در آن صورت نتیجه را از <code dir="ltr">summary.json</code> یا <code dir="ltr">runs.jsonl</code> بخوانید (بخش‌های ۱۱ و ۱۲).</li><li>برای بازگشت به پوشه‌ی نتیجه‌ی اصلی، PowerShell را ببندید و دوباره باز کنید.</li></ul>
+<h2 id="sec-errors">۱۵. خطاهای رایج</h2>
+<div class="tw"><table><thead><tr><th>پیام یا نشانه</th><th>علت</th><th>چاره</th></tr></thead><tbody><tr><td><code dir="ltr">python is not recognized</code></td><td>Python به <code dir="ltr">PATH</code> اضافه نشده</td><td>Python را دوباره نصب کنید و تیک <code dir="ltr">Add python.exe to PATH</code> را بزنید</td></tr><tr><td><code dir="ltr">ModuleNotFoundError: No module named &#x27;numpy&#x27;</code></td><td>کتابخانه‌ها نصب نیستند</td><td><code dir="ltr">pip install -r requirements.txt</code></td></tr><tr><td><code dir="ltr">No such file or directory: experiments/run_study.py</code></td><td>در پوشه‌ی اصلی مخزن نیستید</td><td>با <code dir="ltr">cd</code> به پوشه‌ای بروید که <code dir="ltr">README.md</code> در آن است</td></tr><tr><td><code dir="ltr">... event logs that the analysis reads are missing</code></td><td>لاگ‌های رویداد در مخزن نیستند</td><td><code dir="ltr">python experiments/run_study.py logs</code></td></tr><tr><td><code dir="ltr">[tune] 32 jobs, 0 to run</code> و پایان فوری</td><td>نتیجه‌ها از قبل موجودند</td><td>طبیعی است؛ برای اجرای تازه بخش ۱۴ را ببینید</td></tr><tr><td>عددها با مخزن کمی فرق دارند</td><td>نسخه‌ی کتابخانه‌ها با <code dir="ltr">requirements.txt</code> یکی نیست</td><td>همان نسخه‌ها را نصب کنید</td></tr><tr><td>رایانه هنگام اجرا کند می‌شود</td><td>همه‌ی هسته‌ها مشغول‌اند</td><td><code dir="ltr">MEMSTUDY_PROCS</code> را کوچک‌تر کنید (بخش ۱۰)</td></tr></tbody></table></div>
+<h2 id="sec-glossary">۱۶. واژه‌نامه</h2>
+<div class="tw"><table><thead><tr><th>فارسی</th><th>انگلیسی</th><th>نام در کد</th></tr></thead><tbody><tr><td>هندآور</td><td>handover</td><td><code dir="ltr">HO</code></td></tr><tr><td>هندآور بی‌فایده</td><td>unnecessary handover</td><td><code dir="ltr">unnecessary</code>، <code dir="ltr">UHO_pm</code></td></tr><tr><td>شکست تحرک</td><td>mobility failure</td><td><code dir="ltr">fail_pm</code></td></tr><tr><td>هیسترزیس</td><td>hysteresis</td><td><code dir="ltr">hyst</code></td></tr><tr><td>زمان تا ماشه</td><td>time-to-trigger</td><td><code dir="ltr">ttt</code></td></tr><tr><td>سایه‌افکنی</td><td>shadowing</td><td><code dir="ltr">shadow_sigma</code>، <code dir="ltr">sigma_p</code></td></tr><tr><td>سهم مشترک</td><td>shared share</td><td><code dir="ltr">phi</code></td></tr><tr><td>فاصله‌ی ناهمبستگی</td><td>decorrelation distance</td><td><code dir="ltr">d_corr</code></td></tr><tr><td>قدرت حافظه</td><td>strength</td><td><code dir="ltr">eta</code></td></tr><tr><td>گرم‌کردن</td><td>warm-up</td><td><code dir="ltr">warm</code></td></tr><tr><td>لاگ رویداد</td><td>event log</td><td><code dir="ltr">log</code>، <code dir="ltr">results/logs/</code></td></tr><tr><td>تکرارپذیری</td><td>repeatability</td><td><code dir="ltr">rho</code></td></tr><tr><td>مهارت پیش‌نگر</td><td>prequential skill</td><td><code dir="ltr">skill</code></td></tr><tr><td>همبستگی دونیمه</td><td>split-half correlation</td><td><code dir="ltr">half</code></td></tr><tr><td>بازه‌ی اطمینان</td><td>confidence interval</td><td><code dir="ltr">ci</code></td></tr><tr><td>محیط مرجع</td><td>reference environment</td><td>بلوک <code dir="ltr">ref</code></td></tr></tbody></table></div>
+</main>
+</body>
+</html>

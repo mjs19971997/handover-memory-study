@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper given under preferred-citation."
+title: "Handover-memory study: repeatability of handover outcomes in dense 5G networks"
+type: software
+version: 1.0.0
+license: MIT
+repository-code: "https://github.com/mjs19971997/handover-memory-study"
+authors:
+  - family-names: "Jalili Sanjarani"
+    given-names: "Mostafa"
+    affiliation: "Islamic Azad University, Sabzevar"
+  - family-names: "Elmi Sola"
+    given-names: "Yasser"
+    email: "Yasser.Elmi@iau.ac.ir"
+    affiliation: "Islamic Azad University, Sabzevar"
+  - family-names: "Hasanpour"
+    given-names: "Hesam"
+    affiliation: "Islamic Azad University, Sabzevar"
+  - family-names: "Neghabi"
+    given-names: "Ali Akbar"
+    affiliation: "Islamic Azad University, Sabzevar"
+preferred-citation:
+  type: unpublished
+  title: "When Is Handover History Worth Remembering? Repeatability of Handover Outcomes in Dense 5G Networks"
+  year: 2026
+  authors:
+    - family-names: "Jalili Sanjarani"
+      given-names: "Mostafa"
+      affiliation: "Islamic Azad University, Sabzevar"
+    - family-names: "Elmi Sola"
+      given-names: "Yasser"
+      email: "Yasser.Elmi@iau.ac.ir"
+      affiliation: "Islamic Azad University, Sabzevar"
+    - family-names: "Hasanpour"
+      given-names: "Hesam"
+      affiliation: "Islamic Azad University, Sabzevar"
+    - family-names: "Neghabi"
+      given-names: "Ali Akbar"
+      affiliation: "Islamic Azad University, Sabzevar"
