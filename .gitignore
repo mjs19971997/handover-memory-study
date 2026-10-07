@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+
+# event logs (about 120 MB, re-created by "python experiments/run_study.py logs") and smoke-test output
+results/logs/
+results/smoke/
+
+# run logs
+results/*.log
