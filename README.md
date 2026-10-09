@@ -22,7 +22,9 @@ The repository contains
 - a **minimal memory rule** (`memstudy/rule.py`): Event A3 whose hysteresis is shifted per
   place and per target cell by past outcomes, and whose control is the identical A3 rule;
 - a **repeatability index** computed from an event log (`memstudy/repeatability.py`);
-- the experiment, analysis and figure scripts, the results of all 710 runs and the figures.
+- the experiment, analysis and figure scripts, the results of all 710 runs and the figures;
+- a **validation in ns-3** with the 5G-LENA NR module (`ns3/`): plan, analysis script and the
+  results of 360 protocol-level runs in two environments.
 
 ## Shadowing model
 
@@ -116,6 +118,7 @@ examples/quickstart.py      small A3-versus-memory demo with the parameters at t
 data/synthetic/             the 40-cell synthetic layout (UDN-40)
 results/                    result files (see results/README.md)
 figures/                    figures
+ns3/                        validation in ns-3: plan, analysis, results (see ns3/README.md)
 docs/                       additional documentation
 run_all.sh                  the full pipeline
 ```
@@ -225,6 +228,25 @@ The figures, in the order of the paper:
 | `figures/fig_index.pdf` | `rho`, events per place and `skill` over the propagation sweep |
 | `figures/fig_predict.pdf` | change of unnecessary handovers against `rho`, `n` and `skill`, one point per environment |
 | `figures/fig_curves.pdf` | length of the warm-up, length of the log, bin size and strength `eta` |
+| `figures/fig_ns3.pdf` | ns-3: change of unnecessary handovers against `eta` and against the skill of the control runs (`ns3/make_figure.py`) |
+
+## Validation in ns-3
+
+The same rule with the same parameters was run in ns-3 (release 3.48) with the 5G-LENA NR
+module (version 5.1): 7 gNBs, 20 users, runs of 900 s, six seeds, `eta` = 0, 6, 12, 24, 36 dB,
+in an open area with per-link shadowing and on a street grid in which buildings block the
+line of sight. Set-up, procedure, all numbers and the limits are in `ns3/README.md`.
+
+| Environment | `rho` | `n` | `skill` | Unnecessary HO, A3 | memory (24 dB) | Change | Failures, A3 | memory |
+|---|---|---|---|---|---|---|---|---|
+| Street grid with buildings | 0.23 to 0.43 | 7.6 to 15.5 | 0.11 to 0.33 | 3.91 | 2.68 | -31.5% | 0.009 | 0.016 |
+| Open area | 0.19 to 0.28 | 1.5 to 6.6 | -0.01 to 0.06 | 1.52 | 1.64 | +7.6% | 0.001 | 0.001 |
+
+The sign of the effect follows the skill of the control runs, as in the system-level study;
+the failure rate on the street grid rises with the memory, and the relation between `rho`, `n`
+and `skill` overestimates the skill in the open area. The check is small (six seeds per
+configuration, light traffic) and uses an NR module with one local change. The ns-3 scenario
+program is available from the authors on request.
 
 ## Experiment blocks
 

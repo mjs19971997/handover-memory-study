@@ -1,0 +1,128 @@
+A3 with a location memory of handover outcomes: report
+root: .
+
+urban scenario: 180 runs (0 with outcome counts that do not add up); rule: A3 h4_t100
+  Part 1: repeatability of outcomes by place, control runs (eta = 0)
+    cell              runs     rho n/place   skill     law    half  events un share
+    ISD 200, 8 m/s       6   0.237    8.39   0.127   0.138   0.642    2646   0.422   (mean of the runs)
+                             0.238   45.61   0.202   0.207   0.842   15873   0.422   (seeds pooled as one log)
+    ISD 200, 16 m/s      6   0.323   11.06   0.219   0.233   0.780    3415   0.487   (mean of the runs)
+                             0.330   59.39   0.305   0.307   0.900   20488   0.487   (seeds pooled as one log)
+    ISD 200, 30 m/s      6   0.429   13.01   0.328   0.349   0.889    3890   0.502   (mean of the runs)
+                             0.443   68.84   0.420   0.425   0.973   23337   0.502   (seeds pooled as one log)
+    ISD 400, 8 m/s       6   0.229    7.56   0.107   0.133   0.598    1252   0.404   (mean of the runs)
+                             0.245   30.65   0.196   0.212   0.874    7509   0.404   (seeds pooled as one log)
+    ISD 400, 16 m/s      6   0.291   10.89   0.187   0.211   0.819    1704   0.433   (mean of the runs)
+                             0.313   44.27   0.279   0.289   0.952   10227   0.433   (seeds pooled as one log)
+    ISD 400, 30 m/s      6   0.403   15.49   0.304   0.338   0.921    2133   0.386   (mean of the runs)
+                             0.416   63.05   0.386   0.399   0.988   12799   0.386   (seeds pooled as one log)
+  Part 2: change against the control (eta = 0), paired by seed; rates per UE-minute
+    ISD 200 m, 8 m/s
+      eta  0 dB:  UHO 3.895  failures 0.002  handovers 8.840
+      eta  6 dB:  UHO 3.789 (-2.7%, diff -0.105 +/- 0.165, p=0.16)  failures 0.002 (+33.3%, diff 0.001 +/- 0.003, p=0.75)  handovers 8.474 (-4.1%, diff -0.365 +/- 0.292, p=0.062)
+      eta 12 dB:  UHO 3.511 (-9.9%, diff -0.384 +/- 0.132, p=0.031)  failures 0.000 (-100.0%, diff -0.002 +/- 0.003, p=0.5)  handovers 7.979 (-9.7%, diff -0.861 +/- 0.249, p=0.031)
+      eta 24 dB:  UHO 3.358 (-13.8%, diff -0.536 +/- 0.114, p=0.031)  failures 0.003 (+66.7%, diff 0.001 +/- 0.003, p=1)  handovers 7.585 (-14.2%, diff -1.255 +/- 0.209, p=0.031)
+      eta 36 dB:  UHO 3.310 (-15.0%, diff -0.585 +/- 0.193, p=0.031)  failures 0.001 (-33.3%, diff -0.001 +/- 0.004, p=1)  handovers 7.372 (-16.6%, diff -1.468 +/- 0.288, p=0.031)
+    ISD 200 m, 16 m/s
+      eta  0 dB:  UHO 5.722  failures 0.030  handovers 11.360
+      eta  6 dB:  UHO 5.171 (-9.6%, diff -0.551 +/- 0.206, p=0.031)  failures 0.045 (+49.0%, diff 0.015 +/- 0.015, p=0.094)  handovers 10.425 (-8.2%, diff -0.935 +/- 0.228, p=0.031)
+      eta 12 dB:  UHO 4.680 (-18.2%, diff -1.042 +/- 0.240, p=0.031)  failures 0.037 (+21.6%, diff 0.007 +/- 0.023, p=0.41)  handovers 9.693 (-14.7%, diff -1.667 +/- 0.258, p=0.031)
+      eta 24 dB:  UHO 4.177 (-27.0%, diff -1.545 +/- 0.264, p=0.031)  failures 0.046 (+51.0%, diff 0.015 +/- 0.013, p=0.062)  handovers 8.735 (-23.1%, diff -2.625 +/- 0.249, p=0.031)
+      eta 36 dB:  UHO 3.813 (-33.4%, diff -1.909 +/- 0.076, p=0.031)  failures 0.056 (+84.3%, diff 0.026 +/- 0.009, p=0.031)  handovers 8.235 (-27.5%, diff -3.125 +/- 0.163, p=0.031)
+    ISD 200 m, 30 m/s
+      eta  0 dB:  UHO 6.718  failures 0.018  handovers 12.996
+      eta  6 dB:  UHO 5.673 (-15.6%, diff -1.046 +/- 0.331, p=0.031)  failures 0.027 (+48.4%, diff 0.009 +/- 0.012, p=0.12)  handovers 11.582 (-10.9%, diff -1.414 +/- 0.397, p=0.031)
+      eta 12 dB:  UHO 4.708 (-29.9%, diff -2.011 +/- 0.306, p=0.031)  failures 0.037 (+103.2%, diff 0.019 +/- 0.020, p=0.062)  handovers 10.307 (-20.7%, diff -2.690 +/- 0.400, p=0.031)
+      eta 24 dB:  UHO 3.641 (-45.8%, diff -3.077 +/- 0.180, p=0.031)  failures 0.042 (+125.8%, diff 0.023 +/- 0.012, p=0.031)  handovers 8.859 (-31.8%, diff -4.137 +/- 0.273, p=0.031)
+      eta 36 dB:  UHO 3.268 (-51.4%, diff -3.451 +/- 0.250, p=0.031)  failures 0.049 (+167.7%, diff 0.031 +/- 0.013, p=0.031)  handovers 8.393 (-35.4%, diff -4.604 +/- 0.359, p=0.031)
+    ISD 400 m, 8 m/s
+      eta  0 dB:  UHO 1.745  failures 0.000  handovers 4.173
+      eta  6 dB:  UHO 1.729 (-0.9%, diff -0.016 +/- 0.097, p=0.88)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 4.189 (+0.4%, diff 0.016 +/- 0.206, p=0.44)
+      eta 12 dB:  UHO 1.712 (-1.9%, diff -0.033 +/- 0.103, p=0.56)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 4.034 (-3.3%, diff -0.139 +/- 0.109, p=0.031)
+      eta 24 dB:  UHO 1.611 (-7.7%, diff -0.135 +/- 0.064, p=0.031)  failures 0.001 (n/a, diff 0.001 +/- 0.002, p=1)  handovers 3.850 (-7.7%, diff -0.323 +/- 0.098, p=0.031)
+      eta 36 dB:  UHO 1.563 (-10.4%, diff -0.182 +/- 0.082, p=0.031)  failures 0.001 (n/a, diff 0.001 +/- 0.002, p=0.5)  handovers 3.702 (-11.3%, diff -0.470 +/- 0.105, p=0.031)
+    ISD 400 m, 16 m/s
+      eta  0 dB:  UHO 2.576  failures 0.001  handovers 5.707
+      eta  6 dB:  UHO 2.286 (-11.3%, diff -0.290 +/- 0.099, p=0.031)  failures 0.001 (+100.0%, diff 0.001 +/- 0.004, p=1)  handovers 5.312 (-6.9%, diff -0.395 +/- 0.159, p=0.031)
+      eta 12 dB:  UHO 2.185 (-15.2%, diff -0.391 +/- 0.153, p=0.031)  failures 0.005 (+800.0%, diff 0.005 +/- 0.002, p=0.031)  handovers 5.079 (-11.0%, diff -0.628 +/- 0.151, p=0.031)
+      eta 24 dB:  UHO 1.878 (-27.1%, diff -0.698 +/- 0.205, p=0.031)  failures 0.005 (+700.0%, diff 0.004 +/- 0.006, p=0.12)  handovers 4.639 (-18.7%, diff -1.068 +/- 0.244, p=0.031)
+      eta 36 dB:  UHO 1.748 (-32.1%, diff -0.828 +/- 0.118, p=0.031)  failures 0.004 (+500.0%, diff 0.003 +/- 0.004, p=0.25)  handovers 4.432 (-22.4%, diff -1.276 +/- 0.161, p=0.031)
+    ISD 400 m, 30 m/s
+      eta  0 dB:  UHO 2.796  failures 0.000  handovers 7.135
+      eta  6 dB:  UHO 2.197 (-21.4%, diff -0.599 +/- 0.203, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 6.461 (-9.5%, diff -0.674 +/- 0.187, p=0.031)
+      eta 12 dB:  UHO 1.722 (-38.4%, diff -1.074 +/- 0.200, p=0.031)  failures 0.002 (n/a, diff 0.002 +/- 0.003, p=0.25)  handovers 5.933 (-16.8%, diff -1.202 +/- 0.223, p=0.031)
+      eta 24 dB:  UHO 1.406 (-49.7%, diff -1.390 +/- 0.190, p=0.031)  failures 0.002 (n/a, diff 0.002 +/- 0.003, p=0.25)  handovers 5.556 (-22.1%, diff -1.579 +/- 0.190, p=0.031)
+      eta 36 dB:  UHO 1.311 (-53.1%, diff -1.485 +/- 0.132, p=0.031)  failures 0.005 (n/a, diff 0.005 +/- 0.003, p=0.062)  handovers 5.422 (-24.0%, diff -1.713 +/- 0.151, p=0.031)
+    all cells
+      eta  0 dB:  UHO 3.909  failures 0.009  handovers 8.368
+      eta  6 dB:  UHO 3.474 (-11.1%, diff -0.435 +/- 0.133, p=1.4e-08)  failures 0.013 (+48.8%, diff 0.004 +/- 0.003, p=0.0069)  handovers 7.740 (-7.5%, diff -0.628 +/- 0.174, p=2.2e-08)
+      eta 12 dB:  UHO 3.086 (-21.0%, diff -0.823 +/- 0.230, p=5.5e-10)  failures 0.014 (+60.5%, diff 0.005 +/- 0.004, p=0.032)  handovers 7.171 (-14.3%, diff -1.198 +/- 0.290, p=2.9e-11)
+      eta 24 dB:  UHO 2.678 (-31.5%, diff -1.230 +/- 0.333, p=2.9e-11)  failures 0.016 (+91.9%, diff 0.008 +/- 0.004, p=2.3e-05)  handovers 6.537 (-21.9%, diff -1.831 +/- 0.430, p=2.9e-11)
+      eta 36 dB:  UHO 2.502 (-36.0%, diff -1.406 +/- 0.372, p=2.9e-11)  failures 0.019 (+126.7%, diff 0.011 +/- 0.005, p=3.3e-06)  handovers 6.259 (-25.2%, diff -2.109 +/- 0.473, p=2.9e-11)
+  Part 3: by time window (attempts by command time, failures by their own time); all cells and seeds
+      60- 340 s:  eta 0: UHO 3.918 fail 0.007 |  eta 6: UHO 3.645 (-7%) fail 0.012 |  eta 12: UHO 3.387 (-14%) fail 0.012 |  eta 24: UHO 3.087 (-21%) fail 0.013 |  eta 36: UHO 2.861 (-27%) fail 0.018 |
+     340- 620 s:  eta 0: UHO 3.959 fail 0.009 |  eta 6: UHO 3.435 (-13%) fail 0.013 |  eta 12: UHO 3.017 (-24%) fail 0.016 |  eta 24: UHO 2.565 (-35%) fail 0.016 |  eta 36: UHO 2.413 (-39%) fail 0.021 |
+     620- 900 s:  eta 0: UHO 3.849 fail 0.009 |  eta 6: UHO 3.343 (-13%) fail 0.012 |  eta 12: UHO 2.854 (-26%) fail 0.013 |  eta 24: UHO 2.384 (-38%) fail 0.020 |  eta 36: UHO 2.232 (-42%) fail 0.019 |
+
+base scenario: 180 runs (0 with outcome counts that do not add up); rule: A3 h4_t100
+  Part 1: repeatability of outcomes by place, control runs (eta = 0)
+    cell              runs     rho n/place   skill     law    half  events un share
+    ISD 200, 8 m/s       6   0.194    2.97  -0.014   0.052   0.113    1117   0.175   (mean of the runs)
+                             0.144   10.28   0.010   0.081   0.256    6703   0.175   (seeds pooled as one log)
+    ISD 200, 16 m/s      6   0.253    4.42   0.021   0.113   0.288    1948   0.209   (mean of the runs)
+                             0.204   16.34   0.086   0.152   0.589   11685   0.209   (seeds pooled as one log)
+    ISD 200, 30 m/s      6   0.284    6.62   0.063   0.170   0.372    3134   0.212   (mean of the runs)
+                             0.256   25.30   0.150   0.218   0.777   18801   0.212   (seeds pooled as one log)
+    ISD 400, 8 m/s       6   0.231    1.48   0.003   0.024     nan     980   0.237   (mean of the runs)
+                             0.143    3.84  -0.008   0.040   0.184    5880   0.237   (seeds pooled as one log)
+    ISD 400, 16 m/s      6   0.192    1.80  -0.003   0.026     nan    1550   0.281   (mean of the runs)
+                             0.174    5.34   0.022   0.073   0.293    9300   0.281   (seeds pooled as one log)
+    ISD 400, 30 m/s      6   0.246    2.28   0.020   0.057   0.270    2343   0.314   (mean of the runs)
+                             0.229    7.59   0.082   0.132   0.581   14056   0.315   (seeds pooled as one log)
+  Part 2: change against the control (eta = 0), paired by seed; rates per UE-minute
+    ISD 200 m, 8 m/s
+      eta  0 dB:  UHO 0.652  failures 0.000  handovers 3.739
+      eta  6 dB:  UHO 0.683 (+4.8%, diff 0.032 +/- 0.071, p=0.34)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.745 (+0.2%, diff 0.007 +/- 0.154, p=1)
+      eta 12 dB:  UHO 0.726 (+11.3%, diff 0.074 +/- 0.071, p=0.16)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.816 (+2.1%, diff 0.077 +/- 0.110, p=0.16)
+      eta 24 dB:  UHO 0.905 (+38.9%, diff 0.254 +/- 0.053, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 4.038 (+8.0%, diff 0.299 +/- 0.059, p=0.031)
+      eta 36 dB:  UHO 1.004 (+54.1%, diff 0.352 +/- 0.069, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 4.060 (+8.6%, diff 0.321 +/- 0.134, p=0.031)
+    ISD 200 m, 16 m/s
+      eta  0 dB:  UHO 1.413  failures 0.000  handovers 6.530
+      eta  6 dB:  UHO 1.365 (-3.4%, diff -0.048 +/- 0.072, p=0.12)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 6.418 (-1.7%, diff -0.113 +/- 0.126, p=0.094)
+      eta 12 dB:  UHO 1.379 (-2.4%, diff -0.034 +/- 0.143, p=0.56)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 6.483 (-0.7%, diff -0.047 +/- 0.136, p=0.22)
+      eta 24 dB:  UHO 1.536 (+8.7%, diff 0.123 +/- 0.040, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 6.610 (+1.2%, diff 0.079 +/- 0.067, p=0.031)
+      eta 36 dB:  UHO 1.748 (+23.7%, diff 0.335 +/- 0.105, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 6.793 (+4.0%, diff 0.262 +/- 0.216, p=0.062)
+    ISD 200 m, 30 m/s
+      eta  0 dB:  UHO 2.273  failures 0.000  handovers 10.473
+      eta  6 dB:  UHO 2.141 (-5.8%, diff -0.132 +/- 0.129, p=0.094)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 10.296 (-1.7%, diff -0.176 +/- 0.123, p=0.062)
+      eta 12 dB:  UHO 2.119 (-6.8%, diff -0.154 +/- 0.146, p=0.062)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 10.261 (-2.0%, diff -0.211 +/- 0.091, p=0.031)
+      eta 24 dB:  UHO 2.234 (-1.7%, diff -0.039 +/- 0.193, p=0.69)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 10.270 (-1.9%, diff -0.203 +/- 0.156, p=0.062)
+      eta 36 dB:  UHO 2.365 (+4.0%, diff 0.092 +/- 0.118, p=0.16)  failures 0.001 (n/a, diff 0.001 +/- 0.002, p=1)  handovers 10.404 (-0.7%, diff -0.069 +/- 0.176, p=0.69)
+    ISD 400 m, 8 m/s
+      eta  0 dB:  UHO 0.778  failures 0.000  handovers 3.276
+      eta  6 dB:  UHO 0.792 (+1.8%, diff 0.014 +/- 0.062, p=0.56)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.234 (-1.3%, diff -0.042 +/- 0.100, p=0.56)
+      eta 12 dB:  UHO 0.764 (-1.8%, diff -0.014 +/- 0.073, p=0.84)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.171 (-3.2%, diff -0.105 +/- 0.139, p=0.22)
+      eta 24 dB:  UHO 0.792 (+1.8%, diff 0.014 +/- 0.163, p=1)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.231 (-1.4%, diff -0.045 +/- 0.224, p=0.56)
+      eta 36 dB:  UHO 0.926 (+19.0%, diff 0.148 +/- 0.102, p=0.031)  failures 0.000 (n/a, diff 0.000 +/- 0.000, p=1)  handovers 3.439 (+5.0%, diff 0.162 +/- 0.122, p=0.031)
+    ISD 400 m, 16 m/s
+      eta  0 dB:  UHO 1.484  failures 0.003  handovers 5.193
+      eta  6 dB:  UHO 1.505 (+1.4%, diff 0.021 +/- 0.104, p=1)  failures 0.003 (-0.0%, diff -0.000 +/- 0.003, p=1)  handovers 5.156 (-0.7%, diff -0.037 +/- 0.182, p=0.56)
+      eta 12 dB:  UHO 1.571 (+5.9%, diff 0.087 +/- 0.050, p=0.031)  failures 0.004 (+20.0%, diff 0.001 +/- 0.004, p=1)  handovers 5.215 (+0.4%, diff 0.022 +/- 0.144, p=0.81)
+      eta 24 dB:  UHO 1.607 (+8.3%, diff 0.123 +/- 0.131, p=0.062)  failures 0.004 (+20.0%, diff 0.001 +/- 0.005, p=1)  handovers 5.197 (+0.1%, diff 0.004 +/- 0.174, p=1)
+      eta 36 dB:  UHO 1.811 (+22.0%, diff 0.327 +/- 0.117, p=0.031)  failures 0.002 (-40.0%, diff -0.001 +/- 0.002, p=0.5)  handovers 5.419 (+4.3%, diff 0.226 +/- 0.198, p=0.062)
+    ISD 400 m, 30 m/s
+      eta  0 dB:  UHO 2.536  failures 0.005  handovers 7.831
+      eta  6 dB:  UHO 2.430 (-4.2%, diff -0.106 +/- 0.188, p=0.28)  failures 0.003 (-37.5%, diff -0.002 +/- 0.007, p=0.75)  handovers 7.663 (-2.2%, diff -0.168 +/- 0.233, p=0.16)
+      eta 12 dB:  UHO 2.469 (-2.7%, diff -0.067 +/- 0.173, p=0.44)  failures 0.006 (+25.0%, diff 0.001 +/- 0.005, p=0.75)  handovers 7.723 (-1.4%, diff -0.108 +/- 0.156, p=0.22)
+      eta 24 dB:  UHO 2.752 (+8.5%, diff 0.216 +/- 0.156, p=0.031)  failures 0.003 (-37.5%, diff -0.002 +/- 0.007, p=0.5)  handovers 7.926 (+1.2%, diff 0.095 +/- 0.178, p=0.44)
+      eta 36 dB:  UHO 2.921 (+15.2%, diff 0.385 +/- 0.161, p=0.031)  failures 0.007 (+50.0%, diff 0.002 +/- 0.006, p=0.25)  handovers 8.075 (+3.1%, diff 0.244 +/- 0.247, p=0.094)
+    all cells
+      eta  0 dB:  UHO 1.523  failures 0.001  handovers 6.174
+      eta  6 dB:  UHO 1.486 (-2.4%, diff -0.037 +/- 0.040, p=0.15)  failures 0.001 (-23.1%, diff -0.000 +/- 0.001, p=0.66)  handovers 6.085 (-1.4%, diff -0.088 +/- 0.053, p=0.0021)
+      eta 12 dB:  UHO 1.505 (-1.2%, diff -0.018 +/- 0.045, p=0.75)  failures 0.002 (+23.1%, diff 0.000 +/- 0.001, p=0.68)  handovers 6.112 (-1.0%, diff -0.062 +/- 0.051, p=0.028)
+      eta 24 dB:  UHO 1.638 (+7.6%, diff 0.115 +/- 0.054, p=0.00019)  failures 0.001 (-15.4%, diff -0.000 +/- 0.001, p=0.65)  handovers 6.212 (+0.6%, diff 0.038 +/- 0.070, p=0.27)
+      eta 36 dB:  UHO 1.796 (+17.9%, diff 0.273 +/- 0.051, p=4.1e-10)  failures 0.002 (+23.1%, diff 0.000 +/- 0.001, p=0.3)  handovers 6.365 (+3.1%, diff 0.191 +/- 0.071, p=7.1e-06)
+  Part 3: by time window (attempts by command time, failures by their own time); all cells and seeds
+      60- 340 s:  eta 0: UHO 1.578 fail 0.001 |  eta 6: UHO 1.467 (-7%) fail 0.000 |  eta 12: UHO 1.573 (-0%) fail 0.001 |  eta 24: UHO 1.683 (+7%) fail 0.001 |  eta 36: UHO 1.858 (+18%) fail 0.002 |
+     340- 620 s:  eta 0: UHO 1.506 fail 0.001 |  eta 6: UHO 1.524 (+1%) fail 0.001 |  eta 12: UHO 1.487 (-1%) fail 0.002 |  eta 24: UHO 1.676 (+11%) fail 0.001 |  eta 36: UHO 1.811 (+20%) fail 0.001 |
+     620- 900 s:  eta 0: UHO 1.484 fail 0.001 |  eta 6: UHO 1.468 (-1%) fail 0.002 |  eta 12: UHO 1.454 (-2%) fail 0.002 |  eta 24: UHO 1.554 (+5%) fail 0.001 |  eta 36: UHO 1.719 (+16%) fail 0.001 |
