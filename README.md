@@ -23,8 +23,8 @@ The repository contains
   place and per target cell by past outcomes, and whose control is the identical A3 rule;
 - a **repeatability index** computed from an event log (`memstudy/repeatability.py`);
 - the experiment, analysis and figure scripts, the results of all 710 runs and the figures;
-- a **validation in ns-3** with the 5G-LENA NR module (`ns3/`): plan, analysis script and the
-  results of 360 protocol-level runs in two environments.
+- a **validation in ns-3** with the 5G-LENA NR module (`ns3/`): plan, scenario source and run
+  script, analysis script and the results of 360 protocol-level runs in two environments.
 
 ## Shadowing model
 
@@ -118,7 +118,7 @@ examples/quickstart.py      small A3-versus-memory demo with the parameters at t
 data/synthetic/             the 40-cell synthetic layout (UDN-40)
 results/                    result files (see results/README.md)
 figures/                    figures
-ns3/                        validation in ns-3: plan, analysis, results (see ns3/README.md)
+ns3/                        validation in ns-3: plan, scenario source and run script, analysis, results (see ns3/README.md)
 docs/                       additional documentation
 run_all.sh                  the full pipeline
 ```
@@ -246,7 +246,7 @@ The sign of the effect follows the skill of the control runs, as in the system-l
 the failure rate on the street grid rises with the memory, and the relation between `rho`, `n`
 and `skill` overestimates the skill in the open area. The check is small (six seeds per
 configuration, light traffic) and uses an NR module with one local change. The ns-3 scenario
-program is available from the authors on request.
+program with its build and run scripts is in `ns3/scenario/`.
 
 ## Experiment blocks
 

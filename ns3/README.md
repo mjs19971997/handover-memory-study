@@ -13,6 +13,9 @@ procedure and the radio-link-failure timers run as protocol events.
 | `report_mem.txt`, `report_mem.json` | its output: repeatability of the control runs, effect against the strength `eta`, effect by time window |
 | `mem_urban/results.csv`, `mem_base/results.csv` | one row per run, 180 runs each |
 | `make_figure.py` | draws `figures/fig_ns3.pdf` from `report_mem.json` |
+| `scenario/a3-scenario.cc` | the ns-3 scenario program (C++, built against ns-3.48 and nr v5.1): both environments, the rules `a3` and `mem`, the outcome classification |
+| `scenario/run_sweep.py` | the script that starts the 360 runs |
+| `scenario/build_scenario.sh`, `scenario/fix_srs.sh`, `scenario/setup/` | build of the program, the one change to the NR module, and the installation of the tool chain (see "Building and running the scenario") |
 
 `PLAN_MEM.md` is the plan as it was written before the runs, apart from two references to the
 local batch environment that were reworded. In `report_mem.txt` the local path in the second
@@ -98,10 +101,41 @@ radio-link failure. A batch script started the 360 runs, a fixed number at a tim
 collected the summary rows into `results.csv`. `analyze_mem.py` then computed the report from
 `results.csv` and the per-attempt files.
 
-The scenario program is available from the authors on request. The per-attempt files (79 MB)
-are not in the repository either and are available in the same way. Without them
-`analyze_mem.py` stops with a message and leaves the reports untouched: part 2 of the report
-(effect against `eta`) can be recomputed from `results.csv` alone, parts 1 and 3 cannot.
+The scenario program and the batch script are in `scenario/` (next section). The per-attempt
+files of the 360 runs (79 MB) are not in the repository; the scenario program writes them
+again when the runs are repeated. Without them `analyze_mem.py` stops with a message and
+leaves the reports untouched: part 2 of the report (effect against `eta`) can be recomputed
+from `results.csv` alone, parts 1 and 3 cannot.
+
+## Building and running the scenario
+
+The folder `scenario/` holds everything needed to repeat the runs on Windows with MSYS2
+(UCRT64 environment):
+
+| File | Purpose |
+|---|---|
+| `a3-scenario.cc` | the scenario program: two environments (`--scen`: `base` or `urban`), rules (`--rule`: `a3` or `mem`, with `--memEta`, `--memKappa`, `--memCap`), outcome classification, one JSON line of metrics per run and the per-attempt files (`--PrintHelp` lists the options) |
+| `setup/1_tools.sh` | compiler and build tools (pacman packages) |
+| `setup/2_ns3.sh` | ns-3.48, the four upstream commits in `setup/patches/`, nr v5.1, the SRS change, the full build and this program |
+| `fix_srs.sh` | the one local change to nr v5.1: the five aborts in `NrSpectrumPhy::StartRxSrs` become "drop this SRS" |
+| `build_scenario.sh` | copies the source into `scratch/` of the ns-3 tree and builds that one program |
+| `run_sweep.py` | the sweep: `eta` 0 / 6 / 12 / 24 / 36 dB x two environments x six configurations x six seeds, 900 s per run; resumable; `--status`, `--smoke` |
+
+    cd scenario
+    bash setup/1_tools.sh               # in the "MSYS2 UCRT64" shell
+    bash setup/2_ns3.sh                 # long: downloads and builds ns-3 and nr
+    NS3_WORKERS=24 python run_sweep.py  # 360 runs; python run_sweep.py --smoke for a short test
+    python ../analyze_mem.py --root .   # report on the new runs
+
+The scripts expect ns-3 in `C:\cl\tools\ns3\ns-3-dev` and MSYS2 in `C:\cl\tools\msys64`
+(`2_ns3.sh` creates the first). For other locations set `NS3_DIR_WIN` or change `NS3` and
+`DLL_PATH` at the top of `run_sweep.py`, and change the paths in the shell scripts
+(`build_scenario.sh` also reads `NS3_DIR`).
+
+New runs are written to `scenario/mem_urban/` and `scenario/mem_base/` (`results.csv`,
+per-attempt and per-failure files in `res/`); the runs of the paper in `mem_urban/` and
+`mem_base/` of this folder are not touched. Runs of 900 s with `eta` = 0 and 24 dB, repeated in
+both environments on a second machine, gave the stored rows in every field of `results.csv` except the run time.
 
 ## Results
 
