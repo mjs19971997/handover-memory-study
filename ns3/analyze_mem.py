@@ -49,9 +49,18 @@ def mean_ci(x):
     return m, t * sd / math.sqrt(n)
 
 
-def wilcoxon(d):
-    """Two-sided exact Wilcoxon signed-rank p-value (average ranks for ties, zeros dropped)."""
-    d = [v for v in d if abs(v) > 1e-12]
+# Rates per UE-minute are counts divided by the UE-minutes of a run and are stored in results.csv with
+# eight significant digits.  Differences of equal counts then differ in the last stored digit, and a
+# tolerance of 1e-12 would rank such tied differences as if they were distinct.  For the count rates the
+# signed-rank test therefore treats differences within TIE_TOL as tied (and as zero): the rounding error
+# of a difference is below 3e-6 for rates up to 30, the smallest true step is 1/UE-minutes >= 0.003.
+TIE_TOL = 1e-5
+
+
+def wilcoxon(d, tol=TIE_TOL):
+    """Two-sided exact Wilcoxon signed-rank p-value (average ranks for ties, zeros dropped; differences
+    within tol count as tied)."""
+    d = [v for v in d if abs(v) > tol]
     n = len(d)
     if n == 0:
         return 1.0, 0
@@ -60,7 +69,7 @@ def wilcoxon(d):
     i = 0
     while i < n:
         j = i
-        while j + 1 < n and abs(abs(d[order[j + 1]]) - abs(d[order[i]])) <= 1e-12:
+        while j + 1 < n and abs(abs(d[order[j + 1]]) - abs(d[order[i]])) <= tol:
             j += 1
         for k in range(i, j + 1):
             r2[order[k]] = (i + 1) + (j + 1)
