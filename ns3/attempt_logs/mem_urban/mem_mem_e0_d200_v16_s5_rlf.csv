@@ -1,0 +1,3 @@
+time_s,ue,imsi,cell,cause,old_state,t310_elapsed_ms,ms_since_last_ho_ok,handled,x,y,in_window
+222.3500,0,10,7,HO_COMMAND_LATE,9,11,995,late_attempt,433.0,-98.6,1
+520.5500,18,28,3,HO_COMMAND_LATE,9,104,26995,late_attempt,433.0,225.2,1

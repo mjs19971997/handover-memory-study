@@ -13,6 +13,8 @@ procedure and the radio-link-failure timers run as protocol events.
 | `report_mem.txt`, `report_mem.json` | its output: repeatability of the control runs, effect against the strength `eta`, effect by time window |
 | `mem_urban/results.csv`, `mem_base/results.csv` | one row per run, 180 runs each |
 | `make_figure.py` | draws `figures/fig_ns3.pdf` from `report_mem.json` |
+| `attempt_logs/mem_urban/`, `attempt_logs/mem_base/` | the per-attempt (`*_att.csv`) and per-failure (`*_rlf.csv`) files of 24 runs: inter-site distance 200 m, 16 m/s, seeds 1 to 6, `eta` = 0 and 24 dB, both environments |
+| `make_figure_logs.py` | draws `figures/fig_ns3_logs.pdf` from these files: risk score per place, split-half comparison, change of unnecessary handovers per location bin, logged margin against time. It stops if the files do not reproduce `results.csv` and `report_mem.json`, and writes the numbers quoted in the paper to `attempt_logs/figure_numbers.json` |
 | `scenario/a3-scenario.cc` | the ns-3 scenario program (C++, built against ns-3.48 and nr v5.1): both environments, the rules `a3` and `mem`, the outcome classification |
 | `scenario/run_sweep.py` | the script that starts the 360 runs |
 | `scenario/build_scenario.sh`, `scenario/fix_srs.sh`, `scenario/setup/` | build of the program, the one change to the NR module, and the installation of the tool chain (see "Building and running the scenario") |
@@ -102,7 +104,8 @@ collected the summary rows into `results.csv`. `analyze_mem.py` then computed th
 `results.csv` and the per-attempt files.
 
 The scenario program and the batch script are in `scenario/` (next section). The per-attempt
-files of the 360 runs (79 MB) are not in the repository; the scenario program writes them
+files of the 360 runs (79 MB) are not in the repository, except those of the 24 runs in
+`attempt_logs/` from which one figure of the paper is drawn; the scenario program writes them
 again when the runs are repeated. Without them `analyze_mem.py` stops with a message and
 leaves the reports untouched: part 2 of the report (effect against `eta`) can be recomputed
 from `results.csv` alone, parts 1 and 3 cannot.

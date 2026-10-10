@@ -219,7 +219,7 @@ change of the unnecessary handovers is -0.10 for `rho`, -0.95 for `n`, -0.92 for
 -0.93 for `half`; a threshold of 0.03 on `skill` separates gain from loss in 91% of the
 environments (key `predict`). The paper discusses these results and their limits.
 
-The figures, in the order of the paper:
+The figures of the results:
 
 | File | Content |
 |---|---|
@@ -229,6 +229,7 @@ The figures, in the order of the paper:
 | `figures/fig_predict.pdf` | change of unnecessary handovers against `rho`, `n` and `skill`, one point per environment |
 | `figures/fig_curves.pdf` | length of the warm-up, length of the log, bin size and strength `eta` |
 | `figures/fig_ns3.pdf` | ns-3: change of unnecessary handovers against `eta` and against the skill of the control runs (`ns3/make_figure.py`) |
+| `figures/fig_ns3_logs.pdf` | ns-3: place-wise view of the per-attempt files of 24 runs, with the layouts of the two environments (`ns3/make_figure_logs.py`, files in `ns3/attempt_logs/`) |
 
 ## Validation in ns-3
 

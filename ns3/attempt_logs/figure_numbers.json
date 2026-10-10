@@ -1,0 +1,88 @@
+{
+ "isd": 200,
+ "speed": 16,
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6
+ ],
+ "nmin_place": 10,
+ "nmin_bin": 12,
+ "jobs": [
+  "mem_mem_e0_d200_v16_s1",
+  "mem_mem_e0_d200_v16_s6",
+  "mem_mem_e24_d200_v16_s1",
+  "mem_mem_e24_d200_v16_s6"
+ ],
+ "urban": {
+  "attempts_ctrl": 20539,
+  "labelled_ctrl": 20488,
+  "attempts_mem": 16011,
+  "rbar": 0.48403943771964075,
+  "half": 0.899818829637096,
+  "places_half": 299,
+  "rho_place": 0.3299245654343342,
+  "rho_bin": 0.008920253833380683,
+  "bins_risk": 87,
+  "bins_risk_far": 69,
+  "bins_change": 80,
+  "bins_fewer": 75,
+  "bins_more": 2,
+  "un_ctrl": 9613,
+  "un_mem": 7017,
+  "un_rel": -27.005097264121503,
+  "margin_first_minute": [
+   0.8859999999999999,
+   4.0,
+   4.12
+  ],
+  "margin_last_minute": [
+   0.0,
+   3.02,
+   8.132000000000001
+  ],
+  "margin_p10": 0.0,
+  "margin_p50": 3.57,
+  "margin_p90": 7.15,
+  "share_below": 0.5368808943851102,
+  "share_above": 0.342327150084317,
+  "share_at_4": 0.12079195553057273
+ },
+ "base": {
+  "attempts_ctrl": 11717,
+  "labelled_ctrl": 11685,
+  "attempts_mem": 11872,
+  "rbar": 0.20907145913564398,
+  "half": 0.5894643162581863,
+  "places_half": 321,
+  "rho_place": 0.20447530534339153,
+  "rho_bin": 0.004915143875701216,
+  "bins_risk": 130,
+  "bins_risk_far": 0,
+  "bins_change": 82,
+  "bins_fewer": 31,
+  "bins_more": 46,
+  "un_ctrl": 2374,
+  "un_mem": 2581,
+  "un_rel": 8.719460825610792,
+  "margin_first_minute": [
+   2.8,
+   4.0,
+   4.0
+  ],
+  "margin_last_minute": [
+   0.95,
+   3.07,
+   5.722
+  ],
+  "margin_p10": 1.09,
+  "margin_p50": 3.17,
+  "margin_p90": 5.37,
+  "share_below": 0.5809467654986523,
+  "share_above": 0.19600741239892183,
+  "share_at_4": 0.22304582210242588
+ }
+}
