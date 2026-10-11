@@ -8,6 +8,7 @@ Output directory of the experiment scripts (override with the environment variab
 | `runs.jsonl` | `experiments/run_study.py` | one JSON object per line and per run (710 runs) |
 | `tuned_eta.json` | `experiments/run_study.py` | the selected strength `eta`, the failure budget and the validation means |
 | `summary.json` | `experiments/analyze.py` | paired comparisons, repeatability indices and their relation |
+| `threshold_eval.json`, `threshold_eval.txt` | `experiments/threshold_eval.py` | the skill threshold in-sample, with one environment or one group of environments held out, and on the 12 ns-3 configurations with the threshold fixed |
 | `logs/<id>.npz` | `experiments/run_study.py` | event log of every logged control run; not in the repository (see below) |
 | `smoke/` | `experiments/run_study.py smoke` | output of the smoke test; not in the repository |
 

@@ -112,6 +112,8 @@ experiments/
   common.py                 paths, radio environment, shadowing split, scenario()
   run_study.py              job list and resumable runner       -> results/runs.jsonl, tuned_eta.json, logs/
   analyze.py                statistics and indices              -> results/summary.json
+  threshold_eval.py         skill threshold on held-out environments and on the ns-3 runs
+                                                                -> results/threshold_eval.json, .txt
   make_figures.py           the figures of the paper            -> figures/fig_*.pdf (also .png)
   plotstyle.py              matplotlib style
 examples/quickstart.py      small A3-versus-memory demo with the parameters at the top of the file
@@ -163,6 +165,7 @@ the top of the file.
 ```
 python experiments/run_study.py            # results/runs.jsonl, tuned_eta.json, logs/*.npz
 python experiments/analyze.py              # results/summary.json
+python experiments/threshold_eval.py       # results/threshold_eval.json, threshold_eval.txt (reads summary.json and ns3/report_mem.json)
 python experiments/make_figures.py         # figures/fig_*.pdf (also .png)
 ```
 
@@ -217,7 +220,16 @@ environments (25 propagation settings on the street grid, 25 on the highway, and
 other profiles) the Spearman rank correlation between an index of the control log and the
 change of the unnecessary handovers is -0.10 for `rho`, -0.95 for `n`, -0.92 for `skill` and
 -0.93 for `half`; a threshold of 0.03 on `skill` separates gain from loss in 91% of the
-environments (key `predict`). The paper discusses these results and their limits.
+environments (key `predict`). That figure is in-sample. `experiments/threshold_eval.py` repeats
+the choice of the threshold with environments held out (`results/threshold_eval.txt`): 87%
+with each environment held out in turn (46 of 53; the threshold stays between 0.031 and
+0.060), 91% with a whole mobility profile held out, 87% with a whole value of the shared
+share or of the decorrelation distance held out, against 68% for always expecting a gain.
+With the threshold fixed from these 53 environments, the sign is as predicted in all 12 ns-3
+configurations; in 9 of them the change differs from zero. The comparison with the threshold
+was not part of the plan of the ns-3 runs (`ns3/PLAN_MEM.md` states its expectation in terms
+of `rho`), and any threshold between 0.021 and 0.063 gives the same result there. The paper
+discusses these results and their limits.
 
 The figures of the results:
 
