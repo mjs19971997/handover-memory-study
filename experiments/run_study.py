@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Experiments of the study "When is handover history worth remembering?".
+"""Experiments of the study "Measuring the value of handover history".
 
     python experiments/run_study.py            run everything that is not done yet (resumable)
     python experiments/run_study.py smoke      four short runs, to check that the chain works

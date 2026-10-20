@@ -1,6 +1,6 @@
-# When Is Handover History Worth Remembering?
+# Measuring the Value of Handover History
 
-Code and results of the paper *"When Is Handover History Worth Remembering? Repeatability of
+Code and results of the paper *"Measuring the Value of Handover History: Repeatability of
 Handover Outcomes in Dense 5G Networks"* by Mostafa Jalili Sanjarani, Yasser Elmi Sola,
 Hesam Hasanpour and Ali Akbar Neghabi (Islamic Azad University, Sabzevar).
 
@@ -340,8 +340,8 @@ example of about a hundred lines.
 
 ## How to cite
 
-> M. Jalili Sanjarani, Y. Elmi Sola, H. Hasanpour, A. A. Neghabi, "When Is Handover History
-> Worth Remembering? Repeatability of Handover Outcomes in Dense 5G Networks," 2026.
+> M. Jalili Sanjarani, Y. Elmi Sola, H. Hasanpour, A. A. Neghabi, "Measuring the Value of Handover
+> History: Repeatability of Handover Outcomes in Dense 5G Networks," 2026.
 
 `CITATION.cff` holds the same entry in machine-readable form.
 

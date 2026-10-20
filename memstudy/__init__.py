@@ -1,4 +1,4 @@
-"""Code of the study "When is handover history worth remembering?".
+"""Code of the study "Measuring the value of handover history".
 
 Modules
 -------
